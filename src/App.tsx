@@ -1,31 +1,24 @@
 
 import './App.css';
-import {useEffect} from "react";
-import InstalikeApi from "./instalikeApi";
 import './i18n'
-import {useTranslation} from "react-i18next";
-import Home from "./component/home";
+import {Navigate, Route, Routes} from "react-router-dom";
+import LoginView from "./views/LoginView";
+import FeedView from "./views/FeedView";
+import DiscoverView from "./views/DiscoverView";
+import PostView from "./views/PostView";
 
 
 function App() {
+  return(
 
-  useEffect(()=>{
-    InstalikeApi.auth.login({email:"emilien.muckensturm@etu.unistra.fr",password:'DWEB2023'}).then(({data}) =>{
-      console.log(data.accessToken)
-      InstalikeApi.posts.find(1).fetch;
-    })
-  })
-
-  const {t,i18n} =useTranslation();
-
-  return (
-    <div className="App">
-    {/*<p>{t('actions.follow')}</p>*/}
-      <h1 className="text-3xl font-bold underline ">
-        Hello world!
-      </h1>
-    </div>
-  );
+  <Routes>
+    <Route path="login" element={<LoginView/>}></Route>
+    <Route path="feed" index element={<FeedView/>}></Route>
+    <Route path="discover" element={<DiscoverView/>}></Route>
+    <Route path="post/:id" element={<PostView/>}></Route>
+    <Route path="*" element={<Navigate to="feed"/>}/>
+  </Routes>
+      )
 }
 
 export default App;
