@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="App">
-    <p>{t('actions.follow')}</p>
+    {/*<p>{t('actions.follow')}</p>*/}
       <h1 className="text-3xl font-bold underline ">
         Hello world!
       </h1>
