@@ -1,14 +1,16 @@
 import { Reducer } from 'redux';
 
 import { hasAccessToken } from '../../instalikeApi';
-import { AuthAction, LOGIN, LOGOUT } from './action';
+import { AuthAction, LOGIN, LOGIN_FAIL, LOGOUT } from './action';
 
 type AuthState = {
   isAuth: boolean;
+  errorMessage: any;
 };
 
 const initalState: AuthState = {
   isAuth: hasAccessToken(),
+  errorMessage: '',
 };
 
 const authReducer: Reducer<AuthState, AuthAction> = (state = initalState, action) => {
@@ -23,6 +25,13 @@ const authReducer: Reducer<AuthState, AuthAction> = (state = initalState, action
         ...state,
         isAuth: false,
       };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        isAuth: false,
+        errorMessage: action.payload,
+      };
+
     default:
       return state;
   }

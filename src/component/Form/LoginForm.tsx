@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { redirect } from 'react-router-dom';
+
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
+import useIsAuth from '../../hooks/useIsAuth';
+import { loginAsync } from '../../redux/auth/thunks';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('emilien.muckensturm@etu.unistra.fr');
   const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.auth.errorMessage);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Votre logique de soumission de formulaire ici
-    console.log(email, password);
+    dispatch(loginAsync(email, password));
   };
 
   return (
@@ -33,7 +40,13 @@ const LoginForm = () => {
             onChange={(event) => setPassword(event.target.value)}
             required
           />
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3">
+              {error.error}
+            </div>
+          )}
         </div>
+
         <button className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Se connecter</button>
       </form>
     </div>
