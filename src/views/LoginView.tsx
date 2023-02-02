@@ -1,5 +1,5 @@
 const LoginView = () => {
-  return <>LoginView</>
-}
+  return <>LoginView</>;
+};
 
-export default LoginView
+export default LoginView;

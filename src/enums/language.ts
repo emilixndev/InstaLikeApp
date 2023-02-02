@@ -1,6 +1,6 @@
 enum Language {
-    FR= 'fr',
-    EN='en',
+  FR = 'fr',
+  EN = 'en',
 }
 
-export default Language
+export default Language;

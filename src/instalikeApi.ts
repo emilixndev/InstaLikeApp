@@ -1,6 +1,8 @@
 import axios from "axios";
 import { createInstalikeApi } from "@jmetterrothan/instalike";
 
+export const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN'
+
 // import type {RootState} from "./redux/store";
 
 
@@ -14,4 +16,6 @@ const instalikeApi = createInstalikeApi(
     })
 );
 
+
+export const hasAccessToken = () => window.localStorage.getItem(ACCESS_TOKEN_KEY)!=null
 export default instalikeApi;

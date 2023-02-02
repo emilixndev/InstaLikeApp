@@ -1,20 +1,17 @@
-import {Navigate, useParams} from "react-router-dom";
+import { Navigate, useParams } from 'react-router-dom';
 
 const usePostId = () => {
-  const {id} = useParams();
-  return id ? parseInt(id,10):-1
-}
+  const { id } = useParams();
+  return id ? parseInt(id, 10) : -1;
+};
 
 const PostView = () => {
- const id = usePostId();
+  const id = usePostId();
 
- if(id=== -1){
-  return <Navigate to="feed"/>
- }
- return <>
-  PostView
-  #{id}
- </>
-}
+  if (id === -1) {
+    return <Navigate to="feed" />;
+  }
+  return <>PostView #{id}</>;
+};
 
-export default PostView
+export default PostView;

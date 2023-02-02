@@ -1,6 +1,5 @@
-
 const feedView = () => {
-  return <>FeedView</>
-}
+  return <>FeedView</>;
+};
 
-export default feedView
+export default feedView;

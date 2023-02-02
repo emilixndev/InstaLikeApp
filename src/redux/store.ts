@@ -1,20 +1,22 @@
-import {applyMiddleware, combineReducers, createStore, Middleware} from "redux";
-import thunk from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension";
-import instalikeApi from "../instalikeApi";
+import { applyMiddleware, combineReducers, createStore, Middleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+
+import instalikeApi from '../instalikeApi';
+import authReducer from './auth/reducer';
 
 const rootReducer = combineReducers({
-    // post: x,
-    // user: y,
-})
+  auth: authReducer,
+  // post: x,
+  // user: y,
+});
 
-const middleware:Middleware[]=[]
+const middleware: Middleware[] = [];
 
-middleware.push(thunk.withExtraArgument(instalikeApi))
+middleware.push(thunk.withExtraArgument(instalikeApi));
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)))
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
 
+export type RootState = ReturnType<typeof rootReducer>;
 
-export type RootState = ReturnType<typeof rootReducer>
-
-export default store
+export default store;

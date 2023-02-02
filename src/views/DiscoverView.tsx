@@ -1,5 +1,14 @@
-const DiscoverView = () => {
-  return <>DiscoverView</>
-}
+import { useEffect } from 'react';
 
-export default DiscoverView
+import instalikeApi from '../instalikeApi';
+
+const DiscoverView = () => {
+  useEffect(() => {
+    instalikeApi.posts.fetch({ cursor: null });
+    // instalikeApi.users.me.fetch()
+  }, []);
+
+  return <>DiscoverView</>;
+};
+
+export default DiscoverView;
