@@ -4,8 +4,6 @@ import Menu from '../component/Menu';
 const LoginView = () => {
   return (
     <>
-      LoginView
-      <Menu></Menu>
       <LoginForm></LoginForm>
     </>
   );
