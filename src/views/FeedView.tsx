@@ -1,10 +1,13 @@
+import Card from '../component/Card';
 import Menu from '../component/Menu';
 
 const feedView = () => {
   return (
     <>
       <Menu></Menu>
-      FeedView
+
+      <Card></Card>
+      <Card></Card>
     </>
   );
 };
