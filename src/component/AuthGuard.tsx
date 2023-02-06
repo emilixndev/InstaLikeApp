@@ -6,6 +6,8 @@ const AuthGuard = () => {
   const isAuth = useIsAuth();
   if (!isAuth) {
     return <Navigate to="login" />;
+  } else {
+    // return <Navigate to="Feed" />;
   }
 
   return <Outlet />;

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { redirect } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Navigate, redirect } from 'react-router-dom';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -11,14 +11,23 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const dispatch = useAppDispatch();
   const error = useAppSelector((state) => state.auth.errorMessage);
-
+  const [redirect, setRedirect] = useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(loginAsync(email, password));
   };
 
+  const isAuthenticated = useIsAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setRedirect(true);
+    }
+  }, [isAuthenticated]);
+
   return (
     <div className="flex items-center h-screen">
+      {redirect && <Navigate to="feed" replace={true} />}
       <form className="bg-white p-6 rounded-lg shadow-xl w-1/3 m-auto" onSubmit={handleSubmit}>
         <h2 className="text-lg font-medium mb-4">Connexion</h2>
         <div className="mb-4">

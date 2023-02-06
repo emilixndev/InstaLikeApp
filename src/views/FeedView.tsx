@@ -1,5 +1,12 @@
+import Menu from '../component/Menu';
+
 const feedView = () => {
-  return <>FeedView</>;
+  return (
+    <>
+      <Menu></Menu>
+      FeedView
+    </>
+  );
 };
 
 export default feedView;
