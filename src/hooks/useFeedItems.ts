@@ -1,8 +1,11 @@
-import { selectFeedItems } from '../redux/feed/selectors';
+import { selectFeedItems, statusFeed } from '../redux/feed/selectors';
 import useAppSelector from './useAppSelector';
 
-const useFeedItems = () => {
-  return useAppSelector(selectFeedItems);
+const useFeed = () => {
+  const items = useAppSelector(selectFeedItems);
+  const status = useAppSelector(statusFeed);
+
+  return { items, status };
 };
 
-export default useFeedItems;
+export default useFeed;
