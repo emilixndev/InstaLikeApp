@@ -7,7 +7,7 @@ import Menu from '../component/Menu';
 import Status from '../enums/status';
 import useAppDispatch from '../hooks/useAppDispatch';
 import useFeed from '../hooks/useFeedItems';
-import { fetchFeedUserAsync } from '../redux/feed/thunks';
+import { fetchFeedUserAsync, likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
 
 const FeedView = () => {
   const dispatch = useAppDispatch();
@@ -26,26 +26,22 @@ const FeedView = () => {
       ) : (
         <>
           {feedItems &&
-            feedItems.map((items: Instalike.Post) => {
+            feedItems.map((item: Instalike.Post) => {
               return (
                 <Card
-                  username={items.owner.userName}
-                  img={items.resources[0]}
-                  likes={items.likesCount}
-                  location={items.location}
-                  caption={items.caption}
-                  isLiked={items.viewerHasLiked}
+                  key={item.id}
+                  postid={item.id}
+                  username={item.owner.userName}
+                  img={item.resources[0]}
+                  likes={item.likesCount}
+                  location={item.location}
+                  caption={item.caption}
+                  isLiked={item.viewerHasLiked}
                 ></Card>
               );
             })}
         </>
       )}
-
-      {/*{console.log(feedItems)}*/}
-
-      {/*<Card></Card>;*/}
-      {/*<Card></Card>*/}
-      {/*<Card></Card>*/}
     </>
   );
 };

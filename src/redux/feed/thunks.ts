@@ -1,5 +1,15 @@
+import { Instalike } from '@jmetterrothan/instalike';
+import { data } from 'autoprefixer';
+
 import type { AppThunkAction } from '../types';
-import { failureFeedAction, loadFeedAction, setUserFEED, sucessFeedAction } from './action';
+import {
+  failureFeedAction,
+  likePostFeedAction,
+  loadFeedAction,
+  setUserFEED,
+  sucessFeedAction,
+  unlikePostFeedAction,
+} from './action';
 
 export const fetchFeedUserAsync = (): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
@@ -14,6 +24,28 @@ export const fetchFeedUserAsync = (): AppThunkAction<Promise<void>> => {
       dispatch(failureFeedAction());
 
       // on relance l'exception pour qu'elle soit visible dans la console et traitée ailleurs
+      throw e;
+    }
+  };
+};
+//TODO REMETTRE EN POST
+export const likepostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.posts.find(postId).like();
+      dispatch(likePostFeedAction(postId));
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const unlikePostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.posts.find(postId).unlike();
+      dispatch(unlikePostFeedAction(postId));
+    } catch (e) {
       throw e;
     }
   };

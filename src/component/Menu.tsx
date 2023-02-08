@@ -10,38 +10,6 @@ const Menu = () => {
 
   return (
     <>
-      {/*<ul>*/}
-      {/*  <li>*/}
-      {/*    <Link to="feed">Feed</Link>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <Link to="discover">Discover</Link>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <Link to="post/1">Post 1</Link>*/}
-      {/*  </li>*/}
-      {/*  /!*{!isAuth &&  IF SA AFFICHE *!/*/}
-      {/*  {!isAuth && (*/}
-      {/*    <button*/}
-      {/*      type="button"*/}
-      {/*      onClick={() => {*/}
-      {/*        dispatch(loginAsync('emilien.muckensturm@etu.unistra.fr', 'DWEB2023'));*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      LOGIN*/}
-      {/*    </button>*/}
-      {/*  )}*/}
-      {/*  {isAuth && (*/}
-      {/*    <button*/}
-      {/*      type="button"*/}
-      {/*      onClick={() => {*/}
-      {/*        dispatch(logoutAsync());*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      LOGOUT*/}
-      {/*    </button>*/}
-      {/*  )}*/}
-      {/*</ul>*/}
       <nav className="bg-white px-2 sm:px-4 py-2.5  fixed w-full z-20 top-0 left-0 border-b border-gray-200 ">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <div className="flex items-center font-['Billabong'] text-5xl">Instalike</div>
@@ -56,45 +24,42 @@ const Menu = () => {
                   <Link to="feed">Home</Link>
                 </div>
               </li>
-              <li>
-                <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
-                  <li>
-                    <Link to="discover">Discover</Link>
-                  </li>
-                </div>
-              </li>
-              <li>
-                <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
-                  <li>{/*<Link to="post/1">Post 1</Link>*/}Account</li>
-                </div>
-              </li>
-              <li>
-                <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
-                  <li>
-                    {!isAuth && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          redirect('/login');
-                        }}
-                      >
-                        Login
-                      </button>
-                    )}
 
-                    {isAuth && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          dispatch(logoutAsync());
-                        }}
-                      >
-                        Logout
-                      </button>
-                    )}
-                  </li>
-                </div>
-              </li>
+              <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
+                <li>
+                  <Link to="discover">Discover</Link>
+                </li>
+              </div>
+
+              <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
+                <li>{/*<Link to="post/1">Post 1</Link>*/}Account</li>
+              </div>
+
+              <div className="block py-2 pl-3 pr-4 text-gray-700 rounded md:p-0   ">
+                <li>
+                  {!isAuth && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        redirect('/login');
+                      }}
+                    >
+                      Login
+                    </button>
+                  )}
+
+                  {isAuth && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        dispatch(logoutAsync());
+                      }}
+                    >
+                      Logout
+                    </button>
+                  )}
+                </li>
+              </div>
             </ul>
           </div>
         </div>

@@ -2,7 +2,11 @@ import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
 import { Resource } from 'i18next';
 import { AiFillHeart, AiOutlineHeart, FaBeer, FaRegComment, FiSend } from 'react-icons/all';
 
+import useAppDispatch from '../hooks/useAppDispatch';
+import { likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
+
 type CardProps = {
+  postid: number;
   username: string;
   img: Media;
   likes: number;
@@ -13,7 +17,8 @@ type CardProps = {
   isLiked: boolean;
 };
 
-const Card = ({ username, img, likes, location, caption, isLiked }: CardProps) => {
+const Card = ({ postid, username, img, likes, location, caption, isLiked }: CardProps) => {
+  const dispatch = useAppDispatch();
   return (
     <>
       <div className="flex justify-center mb-10">
@@ -32,7 +37,24 @@ const Card = ({ username, img, likes, location, caption, isLiked }: CardProps) =
           {caption && <p className="ml-3 text-gray-400">{caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
             <div className="flex gap-3">
-              {isLiked ? <AiFillHeart size={30} color="red" /> : <AiOutlineHeart size={30} />}
+              {isLiked ? (
+                <button
+                  onClick={() => {
+                    dispatch(unlikePostAsync(postid));
+                  }}
+                >
+                  <AiFillHeart size={30} color="red" />
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    dispatch(likepostAsync(postid));
+                  }}
+                >
+                  <AiOutlineHeart size={30} />
+                </button>
+              )}
+
               <FaRegComment size={26} />
               <FiSend size={26} />
             </div>

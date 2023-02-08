@@ -3,7 +3,14 @@ import { Reducer } from 'redux';
 
 import Status from '../../enums/status';
 import { FeedAction } from './action';
-import { REQUEST_FEED_FAILURE, REQUEST_FEED_START, REQUEST_FEED_SUCCESS, SET_FEED } from './constant';
+import {
+  LIKE_POST_FEED,
+  REQUEST_FEED_FAILURE,
+  REQUEST_FEED_START,
+  REQUEST_FEED_SUCCESS,
+  SET_FEED,
+  UNLIKE_POST_FEED,
+} from './constant';
 
 type FeedState = {
   items: Instalike.Post[];
@@ -39,6 +46,29 @@ const feedReducer: Reducer<FeedState, FeedAction> = (state = initalState, action
         ...state,
         status: Status.FAILED,
       };
+
+    case LIKE_POST_FEED:
+      return {
+        ...state,
+        items: state.items.map((post) => {
+          if (post.id == action.payload) {
+            return { ...post, viewerHasLiked: true, likesCount: post.likesCount + 1 };
+          }
+          return post;
+        }),
+      };
+
+    case UNLIKE_POST_FEED:
+      return {
+        ...state,
+        items: state.items.map((post) => {
+          if (post.id == action.payload) {
+            return { ...post, viewerHasLiked: false, likesCount: post.likesCount - 1 };
+          }
+          return post;
+        }),
+      };
+
     default:
       return state;
   }
