@@ -1,16 +1,32 @@
-const Card = () => {
+import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
+import { Resource } from 'i18next';
+
+type CardProps = {
+  username: string;
+  img: Media;
+  likes: number;
+  location: string | null;
+
+  caption?: string;
+};
+
+const Card = ({ username, img, likes, location, caption }: CardProps) => {
   return (
     <>
       <div className="flex justify-center mb-10">
         <div className="bg-white border rounded-sm max-w-md">
           <div className="flex items-center px-4 py-3">
-            <img className="h-8 w-8 rounded-full" src="https://picsum.photos/id/1027/150/150" />
+            <img
+              className="h-8 w-8 rounded-full"
+              src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
+            />
             <div className="ml-3 ">
-              <span className="text-sm font-semibold antialiased block leading-tight">8fact</span>
-              <span className="text-gray-600 text-xs block">Asheville, North Carolina</span>
+              <span className="text-sm font-semibold antialiased block leading-tight">{username}</span>
+              {location && <span className="text-gray-600 text-xs block">{location}</span>}
             </div>
           </div>
-          <img src="https://picsum.photos/id/244/900/900" />
+          <img src={img.src} width="500" height="400" />
+          {caption && <p className="ml-3 text-gray-400">{caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
             <div className="flex gap-5">
               <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
@@ -29,7 +45,7 @@ const Card = () => {
               </svg>
             </div>
           </div>
-          <div className="font-semibold text-sm mx-4 mt-2 mb-4">92,372 likes</div>
+          <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
         </div>
       </div>
     </>
