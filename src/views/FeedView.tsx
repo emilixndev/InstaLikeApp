@@ -29,6 +29,7 @@ const FeedView = () => {
               likes={items.likesCount}
               location={items.location}
               caption={items.caption}
+              isLiked={items.viewerHasLiked}
             ></Card>
           );
         })}
