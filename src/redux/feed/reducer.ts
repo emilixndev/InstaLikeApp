@@ -4,6 +4,7 @@ import { Reducer } from 'redux';
 import Status from '../../enums/status';
 import { FeedAction } from './action';
 import {
+  DELETE_COMMENT_FEED,
   LIKE_POST_FEED,
   REQUEST_FEED_FAILURE,
   REQUEST_FEED_START,
@@ -66,6 +67,22 @@ const feedReducer: Reducer<FeedState, FeedAction> = (state = initalState, action
             return { ...post, viewerHasLiked: false, likesCount: post.likesCount - 1 };
           }
           return post;
+        }),
+      };
+
+    case DELETE_COMMENT_FEED:
+      return {
+        ...state,
+        items: state.items.map((post) => {
+          return {
+            ...post,
+            previewComments: post.previewComments.map((comment, key) => {
+              if (comment.id == action.payload) {
+                return { ...comment, text: '' };
+              }
+              return comment;
+            }),
+          };
         }),
       };
 

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import Card from '../component/Card';
+import PreviewComment from '../component/Comment/PreviewComment';
 import Menu from '../component/Menu';
 import Status from '../enums/status';
 import useAppDispatch from '../hooks/useAppDispatch';
@@ -28,16 +29,19 @@ const FeedView = () => {
           {feedItems &&
             feedItems.map((item: Instalike.Post) => {
               return (
-                <Card
-                  key={item.id}
-                  postid={item.id}
-                  username={item.owner.userName}
-                  img={item.resources[0]}
-                  likes={item.likesCount}
-                  location={item.location}
-                  caption={item.caption}
-                  isLiked={item.viewerHasLiked}
-                ></Card>
+                <>
+                  <Card
+                    key={item.id}
+                    postid={item.id}
+                    username={item.owner.userName}
+                    img={item.resources[0]}
+                    likes={item.likesCount}
+                    location={item.location}
+                    caption={item.caption}
+                    isLiked={item.viewerHasLiked}
+                    previewdComments={item.previewComments}
+                  ></Card>
+                </>
               );
             })}
         </>

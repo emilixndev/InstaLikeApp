@@ -29,7 +29,7 @@ const LoginForm = () => {
     <div className="flex items-center h-screen">
       {redirect && <Navigate to="feed" replace={true} />}
       <form className="bg-white p-6 rounded-lg shadow-xl w-1/3 m-auto" onSubmit={handleSubmit}>
-        <h2 className="text-lg font-medium mb-4">Connexion</h2>
+        <h2 className="text-lg font-medium mb-4 font-['Billabong'] text-6xl">InstaLike</h2>
         <div className="mb-4">
           <label className="block font-medium mb-2">Adresse email</label>
           <input
@@ -57,6 +57,9 @@ const LoginForm = () => {
         </div>
 
         <button className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Se connecter</button>
+        <button className="bg-red-600 text-white py-2 px-4 rounded-full hover:bg-red-800 ml-2" type="reset">
+          Effacer
+        </button>
       </form>
     </div>
   );

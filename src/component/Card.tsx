@@ -1,9 +1,13 @@
+import { Instalike } from '@jmetterrothan/instalike';
 import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
 import { Resource } from 'i18next';
+import { useState } from 'react';
 import { AiFillHeart, AiOutlineHeart, FaBeer, FaRegComment, FiSend } from 'react-icons/all';
+import { Link, Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import { likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
+import PreviewComment from './Comment/PreviewComment';
 
 type CardProps = {
   postid: number;
@@ -15,10 +19,19 @@ type CardProps = {
   caption?: string;
 
   isLiked: boolean;
+
+  previewdComments: Instalike.Comment[];
 };
 
-const Card = ({ postid, username, img, likes, location, caption, isLiked }: CardProps) => {
+const Card = ({ postid, username, img, likes, location, caption, isLiked, previewdComments }: CardProps) => {
   const dispatch = useAppDispatch();
+  const [navigateToPost, setnavigateToPost] = useState(false);
+  const displayPreviewComments = () => {
+    if (previewdComments.length !== 0) {
+      return <PreviewComment comments={previewdComments}></PreviewComment>;
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center mb-10">
@@ -54,8 +67,13 @@ const Card = ({ postid, username, img, likes, location, caption, isLiked }: Card
                   <AiOutlineHeart size={30} />
                 </button>
               )}
-
-              <FaRegComment size={26} />
+              <button
+                onClick={() => {
+                  setnavigateToPost(true);
+                }}
+              >
+                <FaRegComment size={26} />
+              </button>
               <FiSend size={26} />
             </div>
             <div className="flex">
@@ -65,6 +83,10 @@ const Card = ({ postid, username, img, likes, location, caption, isLiked }: Card
             </div>
           </div>
           <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
+
+          {}
+          {displayPreviewComments()}
+          {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
       </div>
     </>
