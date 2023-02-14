@@ -41,11 +41,7 @@ const Card = ({
 }: CardProps) => {
   const dispatch = useAppDispatch();
   const [navigateToPost, setnavigateToPost] = useState(false);
-  const displayPreviewComments = () => {
-    if (previewdComments.length !== 0) {
-      return <PreviewComment comments={previewdComments}></PreviewComment>;
-    }
-  };
+
   const getDays = () => {
     const today = new Date();
     const createdOn = new Date(date);
@@ -59,7 +55,7 @@ const Card = ({
   };
 
   const displayCommentForm = () => {
-    return <CommentForm></CommentForm>;
+    return <CommentForm idPost={postid} key={postid}></CommentForm>;
   };
 
   return (
@@ -132,7 +128,8 @@ const Card = ({
 
           {}
           {canCommment && displayCommentForm()}
-          {displayPreviewComments()}
+
+          <PreviewComment comments={previewdComments}></PreviewComment>
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
       </div>

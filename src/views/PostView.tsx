@@ -7,7 +7,6 @@ import Menu from '../component/Menu';
 import Status from '../enums/status';
 import useAppDispatch from '../hooks/useAppDispatch';
 import usePost from '../hooks/usePostItems';
-import { fetchFeedUserAsync } from '../redux/feed/thunks';
 import { fetchPostAsync } from '../redux/post/thunks';
 
 const usePostId = () => {

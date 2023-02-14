@@ -2,9 +2,16 @@ import EmojiPicker, { Emoji } from 'emoji-picker-react';
 import { useState } from 'react';
 import { BsEmojiLaughing } from 'react-icons/all';
 
-const CommentForm = () => {
-  const [isPickerVisible, setPickerVisible] = useState(false);
+import useAppDispatch from '../../hooks/useAppDispatch';
+import { postCommentAsync } from '../../redux/post/thunks';
 
+type commentProps = {
+  idPost: number;
+};
+
+const CommentForm = ({ idPost }: commentProps) => {
+  const [isPickerVisible, setPickerVisible] = useState(false);
+  const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   return (
     <>
@@ -39,7 +46,14 @@ const CommentForm = () => {
             />
           </div>
         )}
-        <div className="m-auto mr-2 cursor-pointer text-blue-700">Publier</div>
+        <button
+          onClick={() => {
+            dispatch(postCommentAsync(comment, idPost));
+            setComment('');
+          }}
+        >
+          <div className="m-auto mr-2 cursor-pointer text-blue-700">Publier</div>
+        </button>
       </div>
     </>
   );

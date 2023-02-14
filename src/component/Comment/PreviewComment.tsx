@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { deleteCommentFeedAsync } from '../../redux/feed/thunks';
+import { deleteCommmentAction } from '../../redux/post/action';
+import { deleteCommentPostAsync } from '../../redux/post/thunks';
 
 type PreviewCommentProps = {
   comments: Instalike.Comment[];
@@ -31,7 +33,7 @@ const PreviewComment = ({ comments }: PreviewCommentProps) => {
           <button
             className="ml-auto "
             onClick={() => {
-              dispatch(deleteCommentFeedAsync(comment.postId, comment.id));
+              dispatch(deleteCommentPostAsync(comment.postId, comment.id));
             }}
           >
             <BiTrash style={{ color: 'red' }} />
