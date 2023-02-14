@@ -29,7 +29,7 @@ export const fetchFeedUserAsync = (): AppThunkAction<Promise<void>> => {
     }
   };
 };
-//TODO REMETTRE EN POST
+
 export const likepostAsync = (postId: number): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
     try {
