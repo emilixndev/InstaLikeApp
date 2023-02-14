@@ -55,6 +55,8 @@ const FeedView = () => {
                     caption={item.caption}
                     isLiked={item.viewerHasLiked}
                     previewdComments={item.previewComments}
+                    date={item.createdAt}
+                    canCommment={false}
                   ></Card>
                 </>
               );

@@ -1,9 +1,8 @@
 import { Instalike } from '@jmetterrothan/instalike';
 import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
-import { Resource } from 'i18next';
 import { useState } from 'react';
-import { AiFillHeart, AiOutlineHeart, FaBeer, FaRegComment, FiSend } from 'react-icons/all';
-import { Link, Navigate } from 'react-router-dom';
+import { AiFillHeart, AiOutlineHeart, FaRegComment, FiSend, MdOutlineWhereToVote } from 'react-icons/all';
+import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import { likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
@@ -21,15 +20,41 @@ type CardProps = {
   isLiked: boolean;
 
   previewdComments: Instalike.Comment[];
+
+  date: string;
+
+  canCommment: boolean;
 };
 
-const Card = ({ postid, username, img, likes, location, caption, isLiked, previewdComments }: CardProps) => {
+const Card = ({
+  postid,
+  username,
+  img,
+  likes,
+  location,
+  caption,
+  isLiked,
+  previewdComments,
+  date,
+  canCommment,
+}: CardProps) => {
   const dispatch = useAppDispatch();
   const [navigateToPost, setnavigateToPost] = useState(false);
   const displayPreviewComments = () => {
     if (previewdComments.length !== 0) {
       return <PreviewComment comments={previewdComments}></PreviewComment>;
     }
+  };
+  const getDays = () => {
+    const today = new Date();
+    const createdOn = new Date(date);
+    const msInDay = 24 * 60 * 60 * 1000;
+
+    createdOn.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    const diff = (+today - +createdOn) / msInDay;
+    return diff;
   };
 
   return (
@@ -43,10 +68,26 @@ const Card = ({ postid, username, img, likes, location, caption, isLiked, previe
             />
             <div className="ml-3 ">
               <span className="text-sm font-semibold antialiased block leading-tight">{username}</span>
-              {location && <span className="text-gray-600 text-xs block">{location}</span>}
+              <div className="flex ">
+                {location && (
+                  <div className="flex">
+                    <span className="text-gray-600 text-xs block ">{location}</span>
+                    <MdOutlineWhereToVote className="mr-3" />
+                  </div>
+                )}
+                <div className="text-sm font-semibold antialiased block leading-tight text-xs text-gray-600  ">
+                  {getDays()} days ago
+                </div>
+              </div>
             </div>
           </div>
-          <img src={img.src} width="500" height="400" />
+          <button
+            onClick={() => {
+              setnavigateToPost(true);
+            }}
+          >
+            <img src={img.src} width="500" height="400" />
+          </button>
           {caption && <p className="ml-3 text-gray-400">{caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
             <div className="flex gap-3">
@@ -85,6 +126,7 @@ const Card = ({ postid, username, img, likes, location, caption, isLiked, previe
           <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
 
           {}
+          {/*{displayommentForm()}*/}
           {displayPreviewComments()}
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
