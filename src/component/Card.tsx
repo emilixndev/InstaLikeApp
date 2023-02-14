@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import useAppDispatch from '../hooks/useAppDispatch';
 import { likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
 import PreviewComment from './Comment/PreviewComment';
+import CommentForm from './Form/CommentForm';
 
 type CardProps = {
   postid: number;
@@ -55,6 +56,10 @@ const Card = ({
 
     const diff = (+today - +createdOn) / msInDay;
     return diff;
+  };
+
+  const displayCommentForm = () => {
+    return <CommentForm></CommentForm>;
   };
 
   return (
@@ -126,7 +131,7 @@ const Card = ({
           <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
 
           {}
-          {/*{displayommentForm()}*/}
+          {canCommment && displayCommentForm()}
           {displayPreviewComments()}
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
