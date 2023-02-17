@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, redirect } from 'react-router-dom';
 
 import Menu from '../component/Menu';
 import useAppDispatch from '../hooks/useAppDispatch';
@@ -43,7 +43,7 @@ const AddPostView = () => {
         >
           test
         </button>
-        {redirect && <Navigate to={'post/' + postData.id} replace={true} />}
+        {redirect && <Navigate to={'/post/' + postData.id} replace={true} />}
       </div>
     </>
   );
