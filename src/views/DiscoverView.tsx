@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import Menu from '../component/Menu';
 import instalikeApi from '../instalikeApi';
 
 const DiscoverView = () => {
@@ -8,7 +9,12 @@ const DiscoverView = () => {
     // instalikeApi.users.me.fetch()
   }, []);
 
-  return <>DiscoverView</>;
+  return (
+    <>
+      <Menu></Menu>
+      DiscoverViewdsqsd
+    </>
+  );
 };
 
 export default DiscoverView;
