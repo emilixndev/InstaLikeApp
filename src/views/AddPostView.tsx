@@ -11,6 +11,7 @@ const AddPostView = () => {
   const [selectedImg, setSelectedImg] = useState<File[]>([]);
   const postData = usePost().items;
   const [redirect, setRedirect] = useState(false);
+
   useEffect(() => {
     postData.id = -1;
   }, []);

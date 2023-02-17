@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 
 import instalikeApi from '../instalikeApi';
 import authReducer from './auth/reducer';
+import commentReducer from './comment/reducer';
 import feedReducer from './feed/reducer';
 import postReducer from './post/reducer';
 import suggestionReducer from './suggestion/reducer';
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   feed: feedReducer,
   suggestion: suggestionReducer,
   post: postReducer,
+  comment: commentReducer,
   // post: x,
   // user: y,
 });

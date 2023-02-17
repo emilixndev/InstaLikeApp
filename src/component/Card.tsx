@@ -6,6 +6,9 @@ import { AiFillHeart, AiOutlineHeart, FaRegComment, FiSend, MdOutlineWhereToVote
 import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
+import useComments from '../hooks/useCommentItems';
+import useFeed from '../hooks/useFeedItems';
+import { fetchCommentAsync } from '../redux/comment/thunks';
 import { likepostFeedAsync, unlikePostFeedAsync } from '../redux/feed/thunks';
 import { addLikePostAsync, deleteLikePostAsync } from '../redux/post/thunks';
 import PreviewComment from './Comment/PreviewComment';
@@ -62,6 +65,14 @@ const Card = ({
     return <CommentForm idPost={postid} key={postid}></CommentForm>;
   };
 
+  const comments = useComments();
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
+    };
+  }, []);
+
   return (
     <>
       <div className="flex justify-center mb-10">
@@ -88,7 +99,9 @@ const Card = ({
           </div>
           <button
             onClick={() => {
-              setnavigateToPost(true);
+              if (inFeed) {
+                setnavigateToPost(true);
+              }
             }}
           >
             <img src={img.src} width="500" height="400" />
@@ -123,7 +136,9 @@ const Card = ({
               )}
               <button
                 onClick={() => {
-                  setnavigateToPost(true);
+                  if (inFeed) {
+                    setnavigateToPost(true);
+                  }
                 }}
               >
                 <FaRegComment size={26} />
@@ -140,9 +155,26 @@ const Card = ({
 
           {}
           {canCommment && displayCommentForm()}
-          {previewdComments.map((comment, key) => {
-            return <PreviewComment comment={comment} key={comment.id} keyTab={key}></PreviewComment>;
-          })}
+          {inFeed &&
+            previewdComments.map((comment, key) => {
+              return <PreviewComment comment={comment} key={comment.id} keyTab={key} isFeed={inFeed}></PreviewComment>;
+            })}
+
+          {!inFeed &&
+            comments.data.data.map((comment, key) => {
+              return <PreviewComment comment={comment} key={comment.id} keyTab={key} isFeed={inFeed}></PreviewComment>;
+            })}
+
+          {comments.data.hasMorePage && (
+            <button
+              onClick={() => {
+                dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
+              }}
+            >
+              test
+            </button>
+          )}
+
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
       </div>

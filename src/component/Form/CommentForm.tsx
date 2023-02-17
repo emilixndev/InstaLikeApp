@@ -42,14 +42,17 @@ const CommentForm = ({ idPost }: commentProps) => {
           <BsEmojiLaughing className="h-8 w-8 m-3" />
         </button>
         {isPickerVisible && (
-          <div className="float-left absolute">
-            <EmojiPicker
-              onEmojiClick={(emojiData) => {
-                setComment(comment + emojiData.emoji);
+          <div className="relative">
+            <div className="float-left absolute bottom-16 ">
+              <EmojiPicker
+                onEmojiClick={(emojiData) => {
+                  setComment(comment + emojiData.emoji);
 
-                setPickerVisible(!isPickerVisible);
-              }}
-            />
+                  setPickerVisible(!isPickerVisible);
+                }}
+                autoFocusSearch={false}
+              />
+            </div>
           </div>
         )}
         <button

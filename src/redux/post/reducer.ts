@@ -17,6 +17,7 @@ import {
 type PostState = {
   data: Instalike.Post;
   loaded: Status;
+  comments: Instalike.Comment[];
 };
 
 const intialState: PostState = {
@@ -54,6 +55,7 @@ const intialState: PostState = {
     },
   },
   loaded: Status.UNLOADED,
+  comments: [],
 };
 
 const postReducer: Reducer<PostState, PostAction> = (state = intialState, action) => {
