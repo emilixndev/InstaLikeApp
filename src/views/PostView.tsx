@@ -47,6 +47,7 @@ const PostView = () => {
               caption={postData.caption}
               location={postData.location}
               canCommment={true}
+              inFeed={false}
             />
           )}
         </>

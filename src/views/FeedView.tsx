@@ -3,14 +3,15 @@ import { useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import Card from '../component/Card';
-import PreviewComment from '../component/Comment/PreviewComment';
 import Menu from '../component/Menu';
 import Suggestion from '../component/Suggestion';
 import Status from '../enums/status';
 import useAppDispatch from '../hooks/useAppDispatch';
 import useFeed from '../hooks/useFeedItems';
+import usePost from '../hooks/usePostItems';
 import useSuggestion from '../hooks/useSuggestionItems';
-import { fetchFeedUserAsync, likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
+import { fetchFeedUserAsync } from '../redux/feed/thunks';
+import { setPost } from '../redux/post/action';
 import { fetchSuggestionAsync } from '../redux/suggestion/thunks';
 
 const FeedView = () => {
@@ -26,7 +27,6 @@ const FeedView = () => {
   const feedItems = useFeed().items;
   const status = useFeed().status;
   const suggestion = useSuggestion().data;
-
   return (
     <>
       <Menu></Menu>
@@ -36,8 +36,8 @@ const FeedView = () => {
         <>
           {suggestion && (
             <div className="flex items-center justify-center p-5">
-              {suggestion.map((user) => {
-                return <Suggestion username={user.userName}></Suggestion>;
+              {suggestion.map((user, key) => {
+                return <Suggestion username={user.userName} key={key}></Suggestion>;
               })}
             </div>
           )}
@@ -57,6 +57,7 @@ const FeedView = () => {
                     previewdComments={item.previewComments}
                     date={item.createdAt}
                     canCommment={false}
+                    inFeed={true}
                   ></Card>
                 </>
               );

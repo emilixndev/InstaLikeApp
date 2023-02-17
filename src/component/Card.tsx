@@ -1,11 +1,13 @@
 import { Instalike } from '@jmetterrothan/instalike';
 import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
-import { useState } from 'react';
+import { comment } from 'postcss';
+import { useEffect, useState } from 'react';
 import { AiFillHeart, AiOutlineHeart, FaRegComment, FiSend, MdOutlineWhereToVote } from 'react-icons/all';
 import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
-import { likepostAsync, unlikePostAsync } from '../redux/feed/thunks';
+import { likepostFeedAsync, unlikePostFeedAsync } from '../redux/feed/thunks';
+import { addLikePostAsync, deleteLikePostAsync } from '../redux/post/thunks';
 import PreviewComment from './Comment/PreviewComment';
 import CommentForm from './Form/CommentForm';
 
@@ -25,6 +27,7 @@ type CardProps = {
   date: string;
 
   canCommment: boolean;
+  inFeed: boolean;
 };
 
 const Card = ({
@@ -38,6 +41,7 @@ const Card = ({
   previewdComments,
   date,
   canCommment,
+  inFeed,
 }: CardProps) => {
   const dispatch = useAppDispatch();
   const [navigateToPost, setnavigateToPost] = useState(false);
@@ -95,7 +99,11 @@ const Card = ({
               {isLiked ? (
                 <button
                   onClick={() => {
-                    dispatch(unlikePostAsync(postid));
+                    if (inFeed) {
+                      dispatch(unlikePostFeedAsync(postid));
+                    } else {
+                      dispatch(deleteLikePostAsync(postid));
+                    }
                   }}
                 >
                   <AiFillHeart size={30} color="red" />
@@ -103,7 +111,11 @@ const Card = ({
               ) : (
                 <button
                   onClick={() => {
-                    dispatch(likepostAsync(postid));
+                    if (inFeed) {
+                      dispatch(likepostFeedAsync(postid));
+                    } else {
+                      dispatch(addLikePostAsync(postid));
+                    }
                   }}
                 >
                   <AiOutlineHeart size={30} />
@@ -128,8 +140,9 @@ const Card = ({
 
           {}
           {canCommment && displayCommentForm()}
-
-          <PreviewComment comments={previewdComments}></PreviewComment>
+          {previewdComments.map((comment, key) => {
+            return <PreviewComment comment={comment} key={comment.id} keyTab={key}></PreviewComment>;
+          })}
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
       </div>

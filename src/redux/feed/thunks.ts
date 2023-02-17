@@ -30,7 +30,7 @@ export const fetchFeedUserAsync = (): AppThunkAction<Promise<void>> => {
   };
 };
 
-export const likepostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+export const likepostFeedAsync = (postId: number): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
     try {
       await api.posts.find(postId).like();
@@ -41,7 +41,7 @@ export const likepostAsync = (postId: number): AppThunkAction<Promise<void>> => 
   };
 };
 
-export const unlikePostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+export const unlikePostFeedAsync = (postId: number): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
     try {
       await api.posts.find(postId).unlike();

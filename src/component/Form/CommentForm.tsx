@@ -26,6 +26,12 @@ const CommentForm = ({ idPost }: commentProps) => {
           onChange={(event) => {
             setComment(event.target.value);
           }}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              dispatch(postCommentAsync(comment, idPost));
+              setComment('');
+            }
+          }}
           className="border border-gray-400 p-2 w-full h-1/4 m-auto"
         ></input>
         <button

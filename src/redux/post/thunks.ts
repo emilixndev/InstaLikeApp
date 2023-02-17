@@ -1,9 +1,10 @@
 import { Instalike } from '@jmetterrothan/instalike';
 
-import { deleteCommentFeedAction } from '../feed/action';
 import { AppThunkAction } from '../types';
 import {
+  addLikeToPostAction,
   deleteCommmentAction,
+  deleteLikeToPostAction,
   failurePostAction,
   loadPostAction,
   postCommentAction,
@@ -40,11 +41,37 @@ export const postCommentAsync = (comment: string, postId: number): AppThunkActio
   };
 };
 
-export const deleteCommentPostAsync = (postId: number, commentId: number): AppThunkAction<Promise<void>> => {
+export const deleteCommentPostAsync = (
+  postId: number,
+  commentId: number,
+  key: number
+): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
     try {
       await api.posts.find(postId).comments.find(commentId).delete();
-      dispatch(deleteCommmentAction(commentId));
+      dispatch(deleteCommmentAction(key));
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const addLikePostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.posts.find(postId).like();
+      dispatch(addLikeToPostAction());
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const deleteLikePostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.posts.find(postId).unlike();
+      dispatch(deleteLikeToPostAction());
     } catch (e) {
       throw e;
     }
