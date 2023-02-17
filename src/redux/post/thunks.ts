@@ -77,3 +77,26 @@ export const deleteLikePostAsync = (postId: number): AppThunkAction<Promise<void
     }
   };
 };
+
+export const addPostAsync = (
+  resources: File[],
+  location: string,
+  caption: string,
+  accessibilityCaption: string,
+  hasCommentsDisabled: boolean
+): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      const { data } = await api.posts.create({
+        resources: resources,
+        location: location,
+        accessibilityCaption: accessibilityCaption,
+        caption: caption,
+        hasCommentsDisabled: hasCommentsDisabled,
+      });
+      dispatch(setPost(data));
+    } catch (e) {
+      throw e;
+    }
+  };
+};

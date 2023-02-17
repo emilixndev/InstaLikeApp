@@ -71,7 +71,6 @@ const postReducer: Reducer<PostState, PostAction> = (state = intialState, action
       return { ...state, data: { ...state.data, previewComments: [...state.data.previewComments, action.payload] } };
 
     case ADD_LIKE_POST:
-      console.log('je pass dans le reducer');
       return { ...state, data: { ...state.data, likesCount: state.data.likesCount + 1, viewerHasLiked: true } };
     case DELETE_LIKE_POST:
       return { ...state, data: { ...state.data, likesCount: state.data.likesCount - 1, viewerHasLiked: false } };
@@ -88,7 +87,6 @@ const postReducer: Reducer<PostState, PostAction> = (state = intialState, action
         },
       };
     default:
-      console.log('je pass dans le default');
       return state;
   }
 };

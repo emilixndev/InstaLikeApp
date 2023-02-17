@@ -15,7 +15,6 @@ const initalState: SuggestionState = {
 const suggestionReducer: Reducer<SuggestionState, SuggestionAction> = (state = initalState, action) => {
   switch (action.type) {
     case SET_SUGGESTION_FEED:
-      console.log(action.payload);
       return { ...state, data: action.payload };
     default:
       return state;

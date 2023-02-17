@@ -1,9 +1,10 @@
+import { useRef } from 'react';
 import { AiOutlineHome, BiCompass, FiLogOut, IoMdAddCircleOutline, RiAccountCircleLine } from 'react-icons/all';
 import { Link, redirect } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import useIsAuth from '../hooks/useIsAuth';
-import { loginAsync, logoutAsync } from '../redux/auth/thunks';
+import { logoutAsync } from '../redux/auth/thunks';
 
 const Menu = () => {
   const isAuth = useIsAuth();
@@ -36,7 +37,10 @@ const Menu = () => {
               <div className="block py-2 pl-3 pr-4 text-black rounded md:p-0   ">
                 <li>
                   {/*<Link to="post/1">Post 1</Link>*/}
-                  <IoMdAddCircleOutline size={30}></IoMdAddCircleOutline>
+
+                  <Link to="/addPost">
+                    <IoMdAddCircleOutline size={30}></IoMdAddCircleOutline>
+                  </Link>
                 </li>
               </div>
               <div className="block py-2 pl-3 pr-4 text-black rounded md:p-0   ">
