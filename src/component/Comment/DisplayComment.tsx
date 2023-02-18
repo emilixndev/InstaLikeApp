@@ -8,14 +8,7 @@ type PreviewCommentProps = {
   comment: Instalike.Comment;
 };
 
-const PreviewComment = ({ comment }: PreviewCommentProps) => {
-  const refactorCommentText = (commentText: string) => {
-    if (commentText.length >= 50) {
-      return commentText.slice(0, 50) + '...'; //TODO Modifier ça si c'est pas dans le feeed
-    }
-    return commentText;
-  };
-
+const DisplayComment = ({ comment }: PreviewCommentProps) => {
   const dispatch = useAppDispatch();
   return (
     <>
@@ -25,9 +18,19 @@ const PreviewComment = ({ comment }: PreviewCommentProps) => {
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
         />
         <div className="ml-3 text-gray-400">{comment.owner.userName} : </div>
-        <div className="ml-2 text-gray-700">{refactorCommentText(comment.text)}</div>
+        <div className="ml-2 text-gray-700">{comment.text}</div>
+        {comment.owner.isViewer && (
+          <button
+            className="ml-auto "
+            onClick={() => {
+              dispatch(deleteOneCommentPostAsync(comment));
+            }}
+          >
+            <BiTrash style={{ color: 'red' }} />
+          </button>
+        )}
       </div>
     </>
   );
 };
-export default PreviewComment;
+export default DisplayComment;

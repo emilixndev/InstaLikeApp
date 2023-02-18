@@ -38,7 +38,6 @@ const AddPostView = () => {
 
         <button
           onClick={(event) => {
-            console.log(selectedImg);
             dispatch(addPostAsync(selectedImg, '', '', '', false));
           }}
         >

@@ -37,6 +37,7 @@ const PostView = () => {
         <>
           {postData && (
             <Card
+              post={postData}
               postid={postData.id}
               username={postData.owner.userName}
               img={postData.resources[0]}

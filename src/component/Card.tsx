@@ -11,10 +11,12 @@ import useFeed from '../hooks/useFeedItems';
 import { fetchCommentAsync } from '../redux/comment/thunks';
 import { likepostFeedAsync, unlikePostFeedAsync } from '../redux/feed/thunks';
 import { addLikePostAsync, deleteLikePostAsync } from '../redux/post/thunks';
+import DisplayComment from './Comment/DisplayComment';
 import PreviewComment from './Comment/PreviewComment';
 import CommentForm from './Form/CommentForm';
 
 type CardProps = {
+  post: Instalike.Post;
   postid: number;
   username: string;
   img: Media;
@@ -34,6 +36,7 @@ type CardProps = {
 };
 
 const Card = ({
+  post,
   postid,
   username,
   img,
@@ -151,28 +154,32 @@ const Card = ({
               </svg>
             </div>
           </div>
-          <div className="font-semibold text-sm mx-4 mt-2 mb-4">{likes} likes</div>
+          <div className="font-semibold text-sm mx-4 mt-2 mb-2">
+            {likes} likes | {post.commentsCount} comments
+          </div>
 
           {}
           {canCommment && displayCommentForm()}
           {inFeed &&
-            previewdComments.map((comment, key) => {
-              return <PreviewComment comment={comment} key={comment.id} keyTab={key} isFeed={inFeed}></PreviewComment>;
+            previewdComments.map((comment) => {
+              return <PreviewComment comment={comment} key={comment.id}></PreviewComment>;
             })}
 
           {!inFeed &&
-            comments.data.data.map((comment, key) => {
-              return <PreviewComment comment={comment} key={comment.id} keyTab={key} isFeed={inFeed}></PreviewComment>;
+            comments.data.data.map((comment) => {
+              return <DisplayComment comment={comment} key={comment.id}></DisplayComment>;
             })}
 
-          {comments.data.hasMorePage && (
-            <button
-              onClick={() => {
-                dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
-              }}
-            >
-              test
-            </button>
+          {!inFeed && comments.data.hasMorePage && (
+            <div className="text-center">
+              <button
+                onClick={() => {
+                  dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
+                }}
+              >
+                Load More comments
+              </button>
+            </div>
           )}
 
           {navigateToPost && <Navigate to={'/post/' + postid} />}

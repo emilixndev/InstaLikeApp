@@ -5,9 +5,9 @@ import Status from '../../enums/status';
 import { PostAction } from './action';
 import {
   ADD_LIKE_POST,
-  DELETE_COMMENT,
+  ADD_ONE_COUNTER_COMMENT,
   DELETE_LIKE_POST,
-  POST_COMMENT,
+  REMOVE_ONE_COUNTER_COMMENT,
   REQUEST_POST_FAILURE,
   REQUEST_POST_START,
   REQUEST_POST_SUCCESS,
@@ -69,25 +69,16 @@ const postReducer: Reducer<PostState, PostAction> = (state = intialState, action
     case REQUEST_POST_FAILURE:
       return { ...state, loaded: Status.FAILED };
 
-    case POST_COMMENT:
-      return { ...state, data: { ...state.data, previewComments: [...state.data.previewComments, action.payload] } };
-
     case ADD_LIKE_POST:
       return { ...state, data: { ...state.data, likesCount: state.data.likesCount + 1, viewerHasLiked: true } };
     case DELETE_LIKE_POST:
       return { ...state, data: { ...state.data, likesCount: state.data.likesCount - 1, viewerHasLiked: false } };
 
-    case DELETE_COMMENT:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          previewComments: [
-            ...state.data.previewComments.slice(0, action.payload),
-            ...state.data.previewComments.slice(action.payload + 1),
-          ],
-        },
-      };
+    case ADD_ONE_COUNTER_COMMENT:
+      return { ...state, data: { ...state.data, commentsCount: state.data.commentsCount + 1 } };
+    case REMOVE_ONE_COUNTER_COMMENT:
+      return { ...state, data: { ...state.data, commentsCount: state.data.commentsCount - 1 } };
+
     default:
       return state;
   }

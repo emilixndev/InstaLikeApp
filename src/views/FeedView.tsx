@@ -46,6 +46,7 @@ const FeedView = () => {
               return (
                 <>
                   <Card
+                    post={item}
                     key={item.id}
                     postid={item.id}
                     username={item.owner.userName}

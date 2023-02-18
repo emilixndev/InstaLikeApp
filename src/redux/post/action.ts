@@ -3,9 +3,9 @@ import { Instalike } from '@jmetterrothan/instalike';
 import { AppAction } from '../types';
 import {
   ADD_LIKE_POST,
-  DELETE_COMMENT,
+  ADD_ONE_COUNTER_COMMENT,
   DELETE_LIKE_POST,
-  POST_COMMENT,
+  REMOVE_ONE_COUNTER_COMMENT,
   REQUEST_POST_FAILURE,
   REQUEST_POST_START,
   REQUEST_POST_SUCCESS,
@@ -18,21 +18,20 @@ export type LoadPostStartAction = AppAction<typeof REQUEST_POST_START>;
 export type LoadPostEndSucessAction = AppAction<typeof REQUEST_POST_SUCCESS>;
 export type LoadPostEndFailureAction = AppAction<typeof REQUEST_POST_FAILURE>;
 
-export type deletePostCommentAction = AppAction<typeof DELETE_COMMENT, number>;
-export type postCommentAction = AppAction<typeof POST_COMMENT, Instalike.Comment>;
-
 export type deleteLikePostAction = AppAction<typeof DELETE_LIKE_POST>;
 export type addLikePostAction = AppAction<typeof ADD_LIKE_POST>;
+export type removeOneCommentCounterPostAction = AppAction<typeof REMOVE_ONE_COUNTER_COMMENT>;
+export type addOneCounterCommentAction = AppAction<typeof ADD_ONE_COUNTER_COMMENT>;
 
 export type PostAction =
   | setPostAction
   | LoadPostStartAction
   | LoadPostEndSucessAction
   | LoadPostEndFailureAction
-  | deletePostCommentAction
-  | postCommentAction
   | addLikePostAction
-  | deleteLikePostAction;
+  | deleteLikePostAction
+  | addOneCounterCommentAction
+  | removeOneCommentCounterPostAction;
 
 export const setPost = (data: Instalike.Post): setPostAction => ({
   type: SET_POST,
@@ -53,15 +52,6 @@ export const failurePostAction = (): LoadPostEndFailureAction => ({
   type: REQUEST_POST_FAILURE,
   payload: undefined,
 });
-export const postCommentAction = (data: Instalike.Comment): postCommentAction => ({
-  type: POST_COMMENT,
-  payload: data,
-});
-
-export const deleteCommmentAction = (key: number): deletePostCommentAction => ({
-  type: DELETE_COMMENT,
-  payload: key,
-});
 
 export const addLikeToPostAction = (): addLikePostAction => ({
   type: ADD_LIKE_POST,
@@ -70,5 +60,15 @@ export const addLikeToPostAction = (): addLikePostAction => ({
 
 export const deleteLikeToPostAction = (): deleteLikePostAction => ({
   type: DELETE_LIKE_POST,
+  payload: undefined,
+});
+
+export const removeOneCommentCounterPostAction = (): removeOneCommentCounterPostAction => ({
+  type: REMOVE_ONE_COUNTER_COMMENT,
+  payload: undefined,
+});
+
+export const addOneCounterCommentAction = (): addOneCounterCommentAction => ({
+  type: ADD_ONE_COUNTER_COMMENT,
   payload: undefined,
 });

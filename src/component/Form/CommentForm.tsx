@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { BsEmojiLaughing } from 'react-icons/all';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
-import { postCommentAsync } from '../../redux/post/thunks';
+import { postNewCommentAsync } from '../../redux/comment/thunks';
 
 type commentProps = {
   idPost: number;
@@ -28,7 +28,7 @@ const CommentForm = ({ idPost }: commentProps) => {
           }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
-              dispatch(postCommentAsync(comment, idPost));
+              dispatch(postNewCommentAsync(comment, idPost));
               setComment('');
             }
           }}
@@ -57,7 +57,7 @@ const CommentForm = ({ idPost }: commentProps) => {
         )}
         <button
           onClick={() => {
-            dispatch(postCommentAsync(comment, idPost));
+            dispatch(postNewCommentAsync(comment, idPost));
             setComment('');
           }}
         >
