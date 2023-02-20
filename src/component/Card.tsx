@@ -131,7 +131,7 @@ const Card = ({
               {/*TODO ICI*/}
               <div>
                 <motion.div
-                  whileTap={{ scale: 10 }}
+                  whileTap={{ scale: 5 }}
                   transition={{ duration: 0.5 }}
                   onClick={() => {
                     if (hasClicked) {
