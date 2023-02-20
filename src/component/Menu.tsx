@@ -6,7 +6,9 @@ const Menu = () => {
     <>
       <div className="border-b-[0.8px]">
         <div className="max-w-[1280px] mx-auto flex items-center justify-between px-4 py-2 h-16">
-          <h1 className="font-['Billabong'] text-[44px]">Instalike</h1>
+          <Link to="/feed">
+            <h1 className="font-['Billabong'] text-[44px]">Instalike</h1>{' '}
+          </Link>
           <nav className="flex gap-5">
             <Link to="/feed">
               <AiOutlineHome size={30}></AiOutlineHome>
