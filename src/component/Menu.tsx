@@ -1,4 +1,4 @@
-import { AiOutlineHome, BiCompass, FiLogOut, IoMdAddCircleOutline, RiAccountCircleLine } from 'react-icons/all';
+import { AiOutlineHome, BiCompass, IoMdAddCircleOutline, RiAccountCircleLine } from 'react-icons/all';
 import { Link } from 'react-router-dom';
 
 const Menu = () => {

@@ -16,6 +16,7 @@ const DisplayComment = ({ comment }: PreviewCommentProps) => {
         <img
           className="h-8  rounded-full"
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
+          alt=""
         />
         <div className="ml-3 text-gray-400">{comment.owner.userName} : </div>
         <div className="ml-2 text-gray-700">{comment.text}</div>

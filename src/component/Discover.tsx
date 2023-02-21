@@ -7,7 +7,6 @@ import Status from '../enums/status';
 import useAppDispatch from '../hooks/useAppDispatch';
 import useFeed from '../hooks/useFeedItems';
 import { fetchDiscoverAsync } from '../redux/feed/thunks';
-import Menu from './Menu';
 
 const Discover = () => {
   const dispatch = useAppDispatch();
@@ -17,11 +16,11 @@ const Discover = () => {
   const status = useFeed().status;
   useEffect(() => {
     dispatch(fetchDiscoverAsync());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
-      {redirect && <Navigate to={'/post/' + selectedPost} replace={true} />};
+      {redirect && <Navigate to={'/post/' + selectedPost} replace={true} />}
       {status !== Status.LOADED ? (
         <ClipLoader color="#2C53F0" cssOverride={{ margin: 'auto', display: 'block' }} />
       ) : (
@@ -29,7 +28,7 @@ const Discover = () => {
           {feed &&
             feed.map((post, key) => {
               return (
-                <div className=" text-center px-4 py-2 m-2 ">
+                <div className=" text-center px-4 py-2 m-2 " key={key}>
                   <button
                     onClick={() => {
                       setSelectedPost(post.id);
@@ -43,7 +42,11 @@ const Discover = () => {
                       <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full  overflow-hidden text-white opacity-0 group-hover:opacity-100 transition duration-400 ease-in-out  rounded-3xl">
                         <div className="text-white flex justify-center h-full items-center">
                           <div className="p-3 flex">
-                            <AiFillHeart size={30} className="mr-3"></AiFillHeart>
+                            {post.viewerHasLiked ? (
+                              <AiFillHeart size={30} color="red" className="mr-3"></AiFillHeart>
+                            ) : (
+                              <AiFillHeart size={30} className="mr-3"></AiFillHeart>
+                            )}
                             {post.likesCount}
                           </div>
                           <div className="p-3 flex ">

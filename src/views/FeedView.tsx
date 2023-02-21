@@ -44,23 +44,21 @@ const FeedView = () => {
           {feedItems &&
             feedItems.map((item: Instalike.Post) => {
               return (
-                <>
-                  <Card
-                    post={item}
-                    key={item.id}
-                    postid={item.id}
-                    username={item.owner.userName}
-                    img={item.resources[0]}
-                    likes={item.likesCount}
-                    location={item.location}
-                    caption={item.caption}
-                    isLiked={item.viewerHasLiked}
-                    previewdComments={item.previewComments}
-                    date={item.createdAt}
-                    canCommment={false}
-                    inFeed={true}
-                  ></Card>
-                </>
+                <Card
+                  post={item}
+                  key={item.id}
+                  postid={item.id}
+                  username={item.owner.userName}
+                  img={item.resources[0]}
+                  likes={item.likesCount}
+                  location={item.location}
+                  caption={item.caption}
+                  isLiked={item.viewerHasLiked}
+                  previewdComments={item.previewComments}
+                  date={item.createdAt}
+                  canCommment={false}
+                  inFeed={true}
+                ></Card>
               );
             })}
         </>

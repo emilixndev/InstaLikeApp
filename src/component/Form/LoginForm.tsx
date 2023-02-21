@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -31,24 +31,29 @@ const LoginForm = () => {
       <form className="bg-white p-6 rounded-lg shadow-xl w-1/3 m-auto" onSubmit={handleSubmit}>
         <h2 className="text-lg font-medium mb-4 font-['Billabong'] text-6xl">InstaLike</h2>
         <div className="mb-4">
-          <label className="block font-medium mb-2">Adresse email</label>
-          <input
-            className="border border-gray-400 p-2 w-full"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
+          <label className="block font-medium mb-2">
+            Adresse email
+            <input
+              className="border border-gray-400 p-2 w-full"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </label>
         </div>
         <div className="mb-6">
-          <label className="block font-medium mb-2">Mot de passe</label>
-          <input
-            className="border border-gray-400 p-2 w-full"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-          />
+          <label className="block font-medium mb-2">
+            Mot de passe
+            <input
+              className="border border-gray-400 p-2 w-full"
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+          </label>
+
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-3">
               {error.error}

@@ -1,4 +1,4 @@
-import EmojiPicker, { Emoji } from 'emoji-picker-react';
+import EmojiPicker from 'emoji-picker-react';
 import { useState } from 'react';
 import { BsEmojiLaughing } from 'react-icons/all';
 
@@ -19,6 +19,7 @@ const CommentForm = ({ idPost }: commentProps) => {
         <img
           className="h-8 w-8 rounded-full m-4"
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
+          alt=""
         />
         <input
           type="text"

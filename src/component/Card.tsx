@@ -1,16 +1,14 @@
+import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { Instalike } from '@jmetterrothan/instalike';
-import { Media } from '@jmetterrothan/instalike/dist/types/Instalike';
+import { Media } from '@jmetterrothan/instalike/src/instalike';
 import { motion } from 'framer-motion';
-import { comment } from 'postcss';
 import { useEffect, useState } from 'react';
-import { AiFillHeart, AiOutlineHeart, FaRegComment, FiSend, MdOutlineWhereToVote } from 'react-icons/all';
+import { FaRegComment, FiSend, MdOutlineWhereToVote, TbDotsVertical } from 'react-icons/all';
 import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import useComments from '../hooks/useCommentItems';
-import useFeed from '../hooks/useFeedItems';
 import { fetchCommentAsync } from '../redux/comment/thunks';
-import { likePostFeedAction } from '../redux/feed/action';
 import { likepostFeedAsync, unlikePostFeedAsync } from '../redux/feed/thunks';
 import { addLikePostAsync, deleteLikePostAsync } from '../redux/post/thunks';
 import DisplayComment from './Comment/DisplayComment';
@@ -66,6 +64,14 @@ const Card = ({
     return diff;
   };
 
+  async function copyTextToClipboard(text: string) {
+    if ('clipboard' in navigator) {
+      return await navigator.clipboard.writeText(text);
+    } else {
+      return document.execCommand('copy', true, text);
+    }
+  }
+
   const displayCommentForm = () => {
     return <CommentForm idPost={postid} key={postid}></CommentForm>;
   };
@@ -74,18 +80,19 @@ const Card = ({
 
   useEffect(() => {
     return () => {
-      dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
+      dispatch(fetchCommentAsync(postid, null));
     };
-  }, []);
+  }, [dispatch, postid]);
 
   return (
     <>
       <div className="flex justify-center mb-10 mt-12">
         <div className="bg-white border rounded-sm max-w-lg">
-          <div className="flex items-center px-4 py-3">
+          <div className="flex items-center  mx-auto flex  justify-between px-4 py-3">
             <img
               className="h-8 w-8 rounded-full"
               src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
+              alt=""
             />
             <div className="ml-3 ">
               <span className="text-sm font-semibold antialiased block leading-tight">{username}</span>
@@ -99,9 +106,38 @@ const Card = ({
                 <div className="text-sm font-semibold antialiased block leading-tight text-xs text-gray-600  ">
                   {getDays()} days ago
                 </div>
+                <Button>Follow</Button>
               </div>
             </div>
+            <div className="flex">
+              <Menu>
+                <MenuButton>
+                  <TbDotsVertical />
+                </MenuButton>
+
+                <MenuList>
+                  <MenuItem color="red">Unfollow</MenuItem>
+                  {inFeed && (
+                    <MenuItem
+                      onClick={() => {
+                        setnavigateToPost(true);
+                      }}
+                    >
+                      See publication
+                    </MenuItem>
+                  )}
+                  <MenuItem
+                    onClick={() => {
+                      copyTextToClipboard(window.location.origin.toString() + '/post/' + postid);
+                    }}
+                  >
+                    Copy link
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </div>
           </div>
+
           <button
             onDoubleClick={() => {
               if (inFeed) {
@@ -128,7 +164,6 @@ const Card = ({
           {caption && <p className="ml-3 text-gray-400">{caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
             <div className="flex gap-3">
-              {/*TODO ICI*/}
               <div>
                 <motion.div
                   whileTap={{ scale: 5 }}
@@ -192,18 +227,15 @@ const Card = ({
             {likes} likes | {post.commentsCount} comments
           </div>
 
-          {}
           {canCommment && displayCommentForm()}
           {inFeed &&
             previewdComments.map((comment) => {
               return <PreviewComment comment={comment} key={comment.id}></PreviewComment>;
             })}
-
           {!inFeed &&
             comments.data.data.map((comment) => {
               return <DisplayComment comment={comment} key={comment.id}></DisplayComment>;
             })}
-
           {!inFeed && comments.data.hasMorePage && (
             <div className="text-center">
               <button
@@ -215,7 +247,6 @@ const Card = ({
               </button>
             </div>
           )}
-
           {navigateToPost && <Navigate to={'/post/' + postid} />}
         </div>
       </div>
