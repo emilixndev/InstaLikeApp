@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AiFillHeart, FaCommentDots } from 'react-icons/all';
+import { AiFillHeart, BiImages, FaCommentDots } from 'react-icons/all';
 import { Navigate } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 
@@ -36,7 +36,14 @@ const Discover = () => {
                     }}
                   >
                     <div className="relative overflow-hidden bg-no-repeat bg-cover max-w-xs group">
-                      <img className="object-cover  w-96 h-96 rounded-3xl  " src={post.resources[0].src} />
+                      {post.resources.length > 1 ? (
+                        <>
+                          <BiImages className=" absolute top-2 right-2" color="white"></BiImages>
+                          <img className="object-cover  w-96 h-96 rounded-3xl  " src={post.resources[0].src}></img>
+                        </>
+                      ) : (
+                        <img className="object-cover  w-96 h-96 rounded-3xl  " src={post.resources[0].src} />
+                      )}
 
                       <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 group-hover:opacity-30 transition duration-400 ease-in-out bg-black rounded-3xl"></div>
                       <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full  overflow-hidden text-white opacity-0 group-hover:opacity-100 transition duration-400 ease-in-out  rounded-3xl">
@@ -60,6 +67,7 @@ const Discover = () => {
                 </div>
               );
             })}
+          )
         </div>
       )}
     </>

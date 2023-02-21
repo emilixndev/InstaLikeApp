@@ -16,7 +16,7 @@ const PreviewComment = ({ comment }: PreviewCommentProps) => {
 
   return (
     <>
-      <div className="border-t rounded p-3 flex items-center">
+      <div className=" p-3 flex items-center">
         <img
           className="h-8  rounded-full"
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"

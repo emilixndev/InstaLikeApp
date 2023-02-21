@@ -65,6 +65,7 @@ const CommentForm = ({ idPost }: commentProps) => {
           <div className="m-auto mr-2 cursor-pointer text-blue-700">Publier</div>
         </button>
       </div>
+      <div className="h-[0.05rem] w-full bg-gray-300 "></div>
     </>
   );
 };

@@ -226,7 +226,7 @@ const Card = ({
           <div className="font-semibold text-sm mx-4 mt-2 mb-2">
             {likes} likes | {post.commentsCount} comments
           </div>
-
+          <div className="h-[0.10rem] w-full bg-gray-300 "></div>
           {canCommment && displayCommentForm()}
           {inFeed &&
             previewdComments.map((comment) => {
@@ -237,13 +237,13 @@ const Card = ({
               return <DisplayComment comment={comment} key={comment.id}></DisplayComment>;
             })}
           {!inFeed && comments.data.hasMorePage && (
-            <div className="text-center">
+            <div className="text-center text-blue-500 font-bold">
               <button
                 onClick={() => {
                   dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
                 }}
               >
-                Load More comments
+                Load more comments
               </button>
             </div>
           )}
