@@ -35,7 +35,7 @@ const FeedView = () => {
       ) : (
         <>
           {suggestion && (
-            <div className="flex items-center justify-center p-5">
+            <div className="mx-auto mt-8 mb-16 px-4 max-w-[640px] flex">
               {suggestion.map((user, key) => {
                 return <Suggestion username={user.userName} key={key}></Suggestion>;
               })}

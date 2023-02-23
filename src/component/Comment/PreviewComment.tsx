@@ -22,8 +22,9 @@ const PreviewComment = ({ comment }: PreviewCommentProps) => {
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
           alt=""
         />
-        <div className="ml-3 text-gray-400">{comment.owner.userName} : </div>
-        <div className="ml-2 text-gray-700">{refactorCommentText(comment.text)}</div>
+        <div className="ml-3">
+          <span className="text-gray-400">{comment.owner.userName}</span> : {comment.text}
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,6 @@
+import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { Instalike } from '@jmetterrothan/instalike';
-import { BiTrash } from 'react-icons/all';
+import { BiTrash, TbDots, TbDotsCircleHorizontal, TbDotsVertical } from 'react-icons/all';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { deleteOneCommentPostAsync } from '../../redux/comment/thunks';
@@ -18,17 +19,28 @@ const DisplayComment = ({ comment }: PreviewCommentProps) => {
           src="https://icon-library.com/images/default-user-icon/default-user-icon-13.jpg"
           alt=""
         />
-        <div className="ml-3 text-gray-400">{comment.owner.userName} : </div>
-        <div className="ml-2 text-gray-700">{comment.text}</div>
+        <div className="ml-3">
+          <span className="text-gray-400">{comment.owner.userName}</span> : {comment.text}
+        </div>
         {comment.owner.isViewer && (
-          <button
-            className="ml-auto "
-            onClick={() => {
-              dispatch(deleteOneCommentPostAsync(comment));
-            }}
-          >
-            <BiTrash style={{ color: 'red' }} />
-          </button>
+          <div className="ml-auto">
+            <Menu>
+              <MenuButton>
+                <TbDots />
+              </MenuButton>
+
+              <MenuList>
+                <MenuItem
+                  color="red"
+                  onClick={() => {
+                    dispatch(deleteOneCommentPostAsync(comment));
+                  }}
+                >
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
         )}
       </div>
     </>

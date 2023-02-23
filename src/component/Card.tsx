@@ -87,7 +87,7 @@ const Card = ({
   return (
     <>
       <div className="flex justify-center mb-10 mt-12">
-        <div className="bg-white border rounded-sm max-w-lg">
+        <div className="bg-white border rounded-sm w-[640px] ">
           <div className="flex items-center  mx-auto flex  justify-between px-4 py-3">
             <img
               className="h-8 w-8 rounded-full"
@@ -99,16 +99,24 @@ const Card = ({
               <div className="flex ">
                 {location && (
                   <div className="flex">
+                    <MdOutlineWhereToVote />
                     <span className="text-gray-600 text-xs block ">{location}</span>
-                    <MdOutlineWhereToVote className="mr-3" />
                   </div>
                 )}
+              </div>
+              <div>
                 <div className="text-sm font-semibold antialiased block leading-tight text-xs text-gray-600  ">
                   {getDays()} days ago
                 </div>
-                <Button>Follow</Button>
               </div>
             </div>
+            {!post.owner.isFollowedByViewer && (
+              <div className="ml-3">
+                <Button>Follow</Button>
+              </div>
+            )}
+
+            <div className="w-96"></div>
             <div className="flex">
               <Menu>
                 <MenuButton>
@@ -116,7 +124,11 @@ const Card = ({
                 </MenuButton>
 
                 <MenuList>
-                  <MenuItem color="red">Unfollow</MenuItem>
+                  {post.owner.isFollowedByViewer ? (
+                    <MenuItem color="red">Unfollow</MenuItem>
+                  ) : (
+                    <MenuItem color="blue">Follow</MenuItem>
+                  )}
                   {inFeed && (
                     <MenuItem
                       onClick={() => {
@@ -159,7 +171,7 @@ const Card = ({
               }
             }}
           >
-            <img src={img.src} width="500" height="400" alt="" />
+            <img src={img.src} width="640" height="400" alt="" />
           </button>
           {caption && <p className="ml-3 text-gray-400">{caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
