@@ -17,9 +17,25 @@ const suggestionReducer: Reducer<SuggestionState, SuggestionAction> = (state = i
     case SET_SUGGESTION_FEED:
       return { ...state, data: action.payload };
     case FOLLOW_USER_SUGGESTION:
-      return { ...state, data: { ...state.data, isFollowedByViewer: true } };
+      return {
+        ...state,
+        data: state.data.map((user) => {
+          if (user === action.payload) {
+            return { ...user, isFollowedByViewer: true };
+          }
+          return user;
+        }),
+      };
     case UNFOLLOW_USER_SUGGESTION:
-      return { ...state, data: { ...state.data, isFollowedByViewer: false } };
+      return {
+        ...state,
+        data: state.data.map((user) => {
+          if (user === action.payload) {
+            return { ...user, isFollowedByViewer: false };
+          }
+          return user;
+        }),
+      };
     default:
       return state;
   }

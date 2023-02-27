@@ -2,7 +2,7 @@ import { Instalike } from '@jmetterrothan/instalike';
 
 import { failureFeedAction, loadFeedAction, setUserFEED, sucessFeedAction } from '../feed/action';
 import { AppThunkAction } from '../types';
-import { setSuggestionAction, unfollowUserSuggestionAction } from './action';
+import { followUserSuggestionAction, setSuggestionAction, unfollowUserSuggestionAction } from './action';
 
 export const fetchSuggestionAsync = (): AppThunkAction<Promise<void>> => {
   return async (dispatch, getState, api) => {
@@ -22,7 +22,7 @@ export const followUserSuggestionAsync = (user: Instalike.User): AppThunkAction<
     try {
       await api.users.me.followers.follow(user.id);
 
-      dispatch(followUserSuggestionAsync(user));
+      dispatch(followUserSuggestionAction(user));
     } catch (e) {
       // on relance l'exception pour qu'elle soit visible dans la console et traitée ailleurs
       throw e;
