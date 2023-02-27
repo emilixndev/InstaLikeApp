@@ -23,7 +23,7 @@ const PreviewComment = ({ comment }: PreviewCommentProps) => {
           alt=""
         />
         <div className="ml-3">
-          <span className="text-gray-400">{comment.owner.userName}</span> : {comment.text}
+          <span className="text-gray-400">{comment.owner.userName}</span> : {refactorCommentText(comment.text)}
         </div>
       </div>
     </>
