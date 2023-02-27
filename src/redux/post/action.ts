@@ -5,11 +5,13 @@ import {
   ADD_LIKE_POST,
   ADD_ONE_COUNTER_COMMENT,
   DELETE_LIKE_POST,
+  FOLLOW_USER_POST,
   REMOVE_ONE_COUNTER_COMMENT,
   REQUEST_POST_FAILURE,
   REQUEST_POST_START,
   REQUEST_POST_SUCCESS,
   SET_POST,
+  UNFOLLOW_USER_POST,
 } from './constant';
 
 export type setPostAction = AppAction<typeof SET_POST, Instalike.Post>;
@@ -22,6 +24,9 @@ export type deleteLikePostAction = AppAction<typeof DELETE_LIKE_POST>;
 export type addLikePostAction = AppAction<typeof ADD_LIKE_POST>;
 export type removeOneCommentCounterPostAction = AppAction<typeof REMOVE_ONE_COUNTER_COMMENT>;
 export type addOneCounterCommentAction = AppAction<typeof ADD_ONE_COUNTER_COMMENT>;
+export type unfollowUserPostAction = AppAction<typeof UNFOLLOW_USER_POST>;
+
+export type followUserPostAction = AppAction<typeof FOLLOW_USER_POST>;
 
 export type PostAction =
   | setPostAction
@@ -31,7 +36,9 @@ export type PostAction =
   | addLikePostAction
   | deleteLikePostAction
   | addOneCounterCommentAction
-  | removeOneCommentCounterPostAction;
+  | removeOneCommentCounterPostAction
+  | followUserPostAction
+  | unfollowUserPostAction;
 
 export const setPost = (data: Instalike.Post): setPostAction => ({
   type: SET_POST,
@@ -70,5 +77,15 @@ export const removeOneCommentCounterPostAction = (): removeOneCommentCounterPost
 
 export const addOneCounterCommentAction = (): addOneCounterCommentAction => ({
   type: ADD_ONE_COUNTER_COMMENT,
+  payload: undefined,
+});
+
+export const unfollowUserPostAction = (): unfollowUserPostAction => ({
+  type: UNFOLLOW_USER_POST,
+  payload: undefined,
+});
+
+export const followUserPostAction = (): followUserPostAction => ({
+  type: FOLLOW_USER_POST,
   payload: undefined,
 });

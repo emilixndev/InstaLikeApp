@@ -4,11 +4,13 @@ import { Reducer } from 'redux';
 import Status from '../../enums/status';
 import { FeedAction } from './action';
 import {
+  FOLLOW_USER_FEED,
   LIKE_POST_FEED,
   REQUEST_FEED_FAILURE,
   REQUEST_FEED_START,
   REQUEST_FEED_SUCCESS,
   SET_FEED,
+  UNFOLLOW_USER_FEED,
   UNLIKE_POST_FEED,
 } from './constant';
 
@@ -69,6 +71,27 @@ const feedReducer: Reducer<FeedState, FeedAction> = (state = initalState, action
         }),
       };
 
+    case UNFOLLOW_USER_FEED:
+      return {
+        ...state,
+        items: state.items.map((post) => {
+          if (post.id == action.payload) {
+            return { ...post, owner: { ...post.owner, isFollowedByViewer: false } };
+          }
+          return post;
+        }),
+      };
+
+    case FOLLOW_USER_FEED:
+      return {
+        ...state,
+        items: state.items.map((post) => {
+          if (post.id == action.payload) {
+            return { ...post, owner: { ...post.owner, isFollowedByViewer: true } };
+          }
+          return post;
+        }),
+      };
     default:
       return state;
   }

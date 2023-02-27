@@ -9,8 +9,19 @@ import { Navigate } from 'react-router-dom';
 import useAppDispatch from '../hooks/useAppDispatch';
 import useComments from '../hooks/useCommentItems';
 import { fetchCommentAsync } from '../redux/comment/thunks';
-import { likepostFeedAsync, unlikePostFeedAsync } from '../redux/feed/thunks';
-import { addLikePostAsync, deleteLikePostAsync } from '../redux/post/thunks';
+import {
+  followUserFeedAsync,
+  likepostFeedAsync,
+  unfollowUserFeedAsync,
+  unlikePostFeedAsync,
+} from '../redux/feed/thunks';
+import { followUserPostAction } from '../redux/post/action';
+import {
+  addLikePostAsync,
+  deleteLikePostAsync,
+  followUserPostAsync,
+  unfollowUserPostAsync,
+} from '../redux/post/thunks';
 import DisplayComment from './Comment/DisplayComment';
 import PreviewComment from './Comment/PreviewComment';
 import CommentForm from './Form/CommentForm';
@@ -112,7 +123,17 @@ const Card = ({
             </div>
             {!post.owner.isFollowedByViewer && (
               <div className="ml-3">
-                <Button>Follow</Button>
+                <Button
+                  onClick={() => {
+                    if (inFeed) {
+                      dispatch(followUserFeedAsync(post.id, post.owner.id));
+                    } else {
+                      dispatch(followUserPostAsync(post.owner.id));
+                    }
+                  }}
+                >
+                  Follow
+                </Button>
               </div>
             )}
 
@@ -125,9 +146,31 @@ const Card = ({
 
                 <MenuList>
                   {post.owner.isFollowedByViewer ? (
-                    <MenuItem color="red">Unfollow</MenuItem>
+                    <MenuItem
+                      color="red"
+                      onClick={() => {
+                        if (inFeed) {
+                          dispatch(unfollowUserFeedAsync(post.id, post.owner.id));
+                        } else {
+                          dispatch(unfollowUserPostAsync(post.owner.id));
+                        }
+                      }}
+                    >
+                      Unfollow
+                    </MenuItem>
                   ) : (
-                    <MenuItem color="blue">Follow</MenuItem>
+                    <MenuItem
+                      color="blue"
+                      onClick={() => {
+                        if (inFeed) {
+                          dispatch(followUserFeedAsync(post.id, post.owner.id));
+                        } else {
+                          dispatch(followUserPostAsync(post.owner.id));
+                        }
+                      }}
+                    >
+                      Follow
+                    </MenuItem>
                   )}
                   {inFeed && (
                     <MenuItem

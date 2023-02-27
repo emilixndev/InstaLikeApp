@@ -1,13 +1,16 @@
 import { Instalike } from '@jmetterrothan/instalike';
 
+import { fetchFeedUserAsync } from '../feed/thunks';
 import { AppThunkAction } from '../types';
 import {
   addLikeToPostAction,
   deleteLikeToPostAction,
   failurePostAction,
+  followUserPostAction,
   loadPostAction,
   setPost,
   sucessPostAction,
+  unfollowUserPostAction,
 } from './action';
 
 export const fetchPostAsync = (postid: number): AppThunkAction<Promise<void>> => {
@@ -67,6 +70,28 @@ export const addPostAsync = (
         hasCommentsDisabled: hasCommentsDisabled,
       });
       dispatch(setPost(data));
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const unfollowUserPostAsync = (userId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.users.me.followers.unfollow(userId);
+      dispatch(unfollowUserPostAction());
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const followUserPostAsync = (userId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.users.me.followers.follow(userId);
+      dispatch(followUserPostAction());
     } catch (e) {
       throw e;
     }

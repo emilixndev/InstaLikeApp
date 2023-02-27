@@ -7,11 +7,13 @@ import {
   ADD_LIKE_POST,
   ADD_ONE_COUNTER_COMMENT,
   DELETE_LIKE_POST,
+  FOLLOW_USER_POST,
   REMOVE_ONE_COUNTER_COMMENT,
   REQUEST_POST_FAILURE,
   REQUEST_POST_START,
   REQUEST_POST_SUCCESS,
   SET_POST,
+  UNFOLLOW_USER_POST,
 } from './constant';
 
 type PostState = {
@@ -78,6 +80,11 @@ const postReducer: Reducer<PostState, PostAction> = (state = intialState, action
       return { ...state, data: { ...state.data, commentsCount: state.data.commentsCount + 1 } };
     case REMOVE_ONE_COUNTER_COMMENT:
       return { ...state, data: { ...state.data, commentsCount: state.data.commentsCount - 1 } };
+
+    case UNFOLLOW_USER_POST:
+      return { ...state, data: { ...state.data, owner: { ...state.data.owner, isFollowedByViewer: false } } };
+    case FOLLOW_USER_POST:
+      return { ...state, data: { ...state.data, owner: { ...state.data.owner, isFollowedByViewer: true } } };
 
     default:
       return state;
