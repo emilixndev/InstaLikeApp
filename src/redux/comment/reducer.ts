@@ -15,14 +15,14 @@ import {
 type CommentState = {
   data: Instalike.Comment[];
   statut: Status;
-  nextCursor: any;
+  nextCursor?: string;
   hasMorePage: boolean;
 };
 
 const initialState: CommentState = {
   data: [],
   statut: Status.UNLOADED,
-  nextCursor: null,
+  nextCursor: undefined,
   hasMorePage: true,
 };
 
