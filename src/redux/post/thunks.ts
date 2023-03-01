@@ -5,6 +5,7 @@ import { AppThunkAction } from '../types';
 import {
   addLikeToPostAction,
   deleteLikeToPostAction,
+  deletePostAction,
   failurePostAction,
   followUserPostAction,
   loadPostAction,
@@ -92,6 +93,17 @@ export const followUserPostAsync = (userId: number): AppThunkAction<Promise<void
     try {
       await api.users.me.followers.follow(userId);
       dispatch(followUserPostAction());
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const deletePostAsync = (postId: number): AppThunkAction<Promise<void>> => {
+  return async (dispatch, getState, api) => {
+    try {
+      await api.posts.find(postId).delete();
+      dispatch(deletePostAction());
     } catch (e) {
       throw e;
     }

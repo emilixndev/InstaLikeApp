@@ -2,7 +2,7 @@ import { Button, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { Instalike } from '@jmetterrothan/instalike';
 import { Media } from '@jmetterrothan/instalike/src/instalike';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegComment, FiSend, MdOutlineWhereToVote, TbDotsVertical } from 'react-icons/all';
 import { Navigate } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ import { followUserPostAction } from '../redux/post/action';
 import {
   addLikePostAsync,
   deleteLikePostAsync,
+  deletePostAsync,
   followUserPostAsync,
   unfollowUserPostAsync,
 } from '../redux/post/thunks';
@@ -28,44 +29,18 @@ import CommentForm from './Form/CommentForm';
 
 type CardProps = {
   post: Instalike.Post;
-  postid: number;
-  username: string;
-  img: Media;
-  likes: number;
-  location?: string;
-
-  caption?: string;
-
-  isLiked: boolean;
-
-  previewdComments: Instalike.Comment[];
-
-  date: string;
 
   canCommment: boolean;
   inFeed: boolean;
 };
 
-const Card = ({
-  post,
-  postid,
-  username,
-  img,
-  likes,
-  location,
-  caption,
-  isLiked,
-  previewdComments,
-  date,
-  canCommment,
-  inFeed,
-}: CardProps) => {
+const Card = ({ post, canCommment, inFeed }: CardProps) => {
   const dispatch = useAppDispatch();
   const [navigateToPost, setnavigateToPost] = useState(false);
 
   const getDays = () => {
     const today = new Date();
-    const createdOn = new Date(date);
+    const createdOn = new Date(post.createdAt);
     const msInDay = 24 * 60 * 60 * 1000;
 
     createdOn.setHours(0, 0, 0, 0);
@@ -84,19 +59,20 @@ const Card = ({
   }
 
   const displayCommentForm = () => {
-    return <CommentForm idPost={postid} key={postid}></CommentForm>;
+    return <CommentForm idPost={post.id} key={post.id}></CommentForm>;
   };
   const [hasClicked, setHasClicked] = useState(post.viewerHasLiked);
   const comments = useComments();
 
   useEffect(() => {
     return () => {
-      dispatch(fetchCommentAsync(postid, null));
+      dispatch(fetchCommentAsync(post.id, null));
     };
-  }, [dispatch, postid]);
+  }, [dispatch, post.id]);
 
   return (
     <>
+      {post.id === -1 && <Navigate to="feed" replace={true} />}
       <div className="flex justify-center mb-10 mt-12">
         <div className="bg-white border rounded-sm w-[640px] ">
           <div className="flex items-center  mx-auto flex  justify-between px-4 py-3">
@@ -106,12 +82,12 @@ const Card = ({
               alt=""
             />
             <div className="ml-3 ">
-              <span className="text-sm font-semibold antialiased block leading-tight">{username}</span>
+              <span className="text-sm font-semibold antialiased block leading-tight">{post.owner.userName}</span>
               <div className="flex ">
                 {location && (
                   <div className="flex">
                     <MdOutlineWhereToVote />
-                    <span className="text-gray-600 text-xs block ">{location}</span>
+                    <span className="text-gray-600 text-xs block ">{post.location}</span>
                   </div>
                 )}
               </div>
@@ -121,7 +97,7 @@ const Card = ({
                 </div>
               </div>
             </div>
-            {!post.owner.isFollowedByViewer && (
+            {!post.owner.isFollowedByViewer && !post.owner.isViewer && (
               <div className="ml-3">
                 <Button
                   onClick={() => {
@@ -145,6 +121,17 @@ const Card = ({
                 </MenuButton>
 
                 <MenuList>
+                  {post.owner.isViewer && (
+                    <MenuItem
+                      color="red"
+                      onClick={() => {
+                        dispatch(deletePostAsync(post.id));
+                      }}
+                    >
+                      Delete
+                    </MenuItem>
+                  )}
+
                   {post.owner.isFollowedByViewer ? (
                     <MenuItem
                       color="red"
@@ -159,18 +146,20 @@ const Card = ({
                       Unfollow
                     </MenuItem>
                   ) : (
-                    <MenuItem
-                      color="blue"
-                      onClick={() => {
-                        if (inFeed) {
-                          dispatch(followUserFeedAsync(post.id, post.owner.id));
-                        } else {
-                          dispatch(followUserPostAsync(post.owner.id));
-                        }
-                      }}
-                    >
-                      Follow
-                    </MenuItem>
+                    !post.owner.isViewer && (
+                      <MenuItem
+                        color="blue"
+                        onClick={() => {
+                          if (inFeed) {
+                            dispatch(followUserFeedAsync(post.id, post.owner.id));
+                          } else {
+                            dispatch(followUserPostAsync(post.owner.id));
+                          }
+                        }}
+                      >
+                        Follow
+                      </MenuItem>
+                    )
                   )}
                   {inFeed && (
                     <MenuItem
@@ -183,7 +172,7 @@ const Card = ({
                   )}
                   <MenuItem
                     onClick={() => {
-                      copyTextToClipboard(window.location.origin.toString() + '/post/' + postid);
+                      copyTextToClipboard(window.location.origin.toString() + '/post/' + post.id);
                     }}
                   >
                     Copy link
@@ -197,26 +186,26 @@ const Card = ({
             onDoubleClick={() => {
               if (inFeed) {
                 if (post.viewerHasLiked) {
-                  dispatch(unlikePostFeedAsync(postid));
+                  dispatch(unlikePostFeedAsync(post.id));
                   setHasClicked(false);
                 } else {
-                  dispatch(likepostFeedAsync(postid));
+                  dispatch(likepostFeedAsync(post.id));
                   setHasClicked(true);
                 }
               } else {
                 if (post.viewerHasLiked) {
-                  dispatch(deleteLikePostAsync(postid));
+                  dispatch(deleteLikePostAsync(post.id));
                   setHasClicked(false);
                 } else {
-                  dispatch(addLikePostAsync(postid));
+                  dispatch(addLikePostAsync(post.id));
                   setHasClicked(true);
                 }
               }
             }}
           >
-            <img src={img.src} width="640" height="400" alt="" />
+            <img src={post.resources[0].src} width="640" height="400" alt="" />
           </button>
-          {caption && <p className="ml-3 text-gray-400">{caption}</p>}
+          {post.caption && <p className="ml-3 text-gray-400">{post.caption}</p>}
           <div className="flex items-center justify-between mx-4 mt-3 mb-2">
             <div className="flex gap-3">
               <div>
@@ -226,15 +215,15 @@ const Card = ({
                   onClick={() => {
                     if (hasClicked) {
                       if (inFeed) {
-                        dispatch(unlikePostFeedAsync(postid));
+                        dispatch(unlikePostFeedAsync(post.id));
                       } else {
-                        dispatch(deleteLikePostAsync(postid));
+                        dispatch(deleteLikePostAsync(post.id));
                       }
                     } else {
                       if (inFeed) {
-                        dispatch(likepostFeedAsync(postid));
+                        dispatch(likepostFeedAsync(post.id));
                       } else {
-                        dispatch(addLikePostAsync(postid));
+                        dispatch(addLikePostAsync(post.id));
                       }
                     }
 
@@ -279,12 +268,12 @@ const Card = ({
             </div>
           </div>
           <div className="font-semibold text-sm mx-4 mt-2 mb-2">
-            {likes} likes | {post.commentsCount} comments
+            {post.likesCount} likes | {post.commentsCount} comments
           </div>
           <div className="h-[0.10rem] w-full bg-gray-300 "></div>
           {canCommment && displayCommentForm()}
           {inFeed &&
-            previewdComments.map((comment) => {
+            post.previewComments.map((comment) => {
               return <PreviewComment comment={comment} key={comment.id}></PreviewComment>;
             })}
           {!inFeed &&
@@ -295,14 +284,14 @@ const Card = ({
             <div className="text-center text-blue-500 font-bold">
               <button
                 onClick={() => {
-                  dispatch(fetchCommentAsync(postid, comments.data.nextCursor));
+                  dispatch(fetchCommentAsync(post.id, comments.data.nextCursor));
                 }}
               >
                 Load more comments
               </button>
             </div>
           )}
-          {navigateToPost && <Navigate to={'/post/' + postid} />}
+          {navigateToPost && <Navigate to={'/post/' + post.id} />}
         </div>
       </div>
     </>

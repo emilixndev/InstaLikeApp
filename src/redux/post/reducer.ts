@@ -7,6 +7,7 @@ import {
   ADD_LIKE_POST,
   ADD_ONE_COUNTER_COMMENT,
   DELETE_LIKE_POST,
+  DELETE_POST,
   FOLLOW_USER_POST,
   REMOVE_ONE_COUNTER_COMMENT,
   REQUEST_POST_FAILURE,
@@ -85,6 +86,9 @@ const postReducer: Reducer<PostState, PostAction> = (state = intialState, action
       return { ...state, data: { ...state.data, owner: { ...state.data.owner, isFollowedByViewer: false } } };
     case FOLLOW_USER_POST:
       return { ...state, data: { ...state.data, owner: { ...state.data.owner, isFollowedByViewer: true } } };
+
+    case DELETE_POST:
+      return { ...state, data: { ...state.data, id: -1 } };
 
     default:
       return state;
