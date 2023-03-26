@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { IoIosClose } from 'react-icons/all';
 import { Navigate, redirect } from 'react-router-dom';
 
 import Menu from '../component/Menu';
@@ -11,6 +12,8 @@ const AddPostView = () => {
   const [selectedImg, setSelectedImg] = useState<File[]>([]);
   const postData = usePost().items;
   const [redirect, setRedirect] = useState(false);
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     postData.id = -1;
@@ -25,25 +28,66 @@ const AddPostView = () => {
   return (
     <>
       <Menu />
-      <div>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(event) => {
-            if (event.target.files) {
-              setSelectedImg(selectedImg.concat(event.target.files[0])); //TODO REPLACE l'IMG
-            }
-          }}
-        />
-
-        <button
-          onClick={(event) => {
-            dispatch(addPostAsync(selectedImg, '', '', '', false));
-          }}
-        >
-          test
-        </button>
-        {redirect && <Navigate to={'/post/' + postData.id} replace={true} />}
+      <div className="max-w-[640px] mx-auto border border-black  p-8 mt-20">
+        <p className="font-bold text-2xl text-center ">Ajouter un post</p>
+        <div className="flex justify-center flex-col  mt-4 ">
+          <input
+            type="file"
+            accept="image/*"
+            className="mx-auto mt-4"
+            onChange={(event) => {
+              if (event.target.files) {
+                setSelectedImg(selectedImg.concat(event.target.files[0])); //TODO REPLACE l'IMG
+              }
+            }}
+          />
+          {selectedImg.length !== 0 && <div className="font-bold p-2">Images sélectionné : </div>}
+          {selectedImg &&
+            selectedImg.map((img, index) => {
+              return (
+                <div key={index} className="flex">
+                  {img.name}
+                  <button
+                    onClick={() => {
+                      const index = selectedImg.findIndex((imgSearch) => imgSearch === img);
+                      setSelectedImg([...selectedImg.slice(0, index), ...selectedImg.slice(index + 1)]);
+                      console.log(index);
+                    }}
+                  >
+                    <IoIosClose size={25} color="red"></IoIosClose>
+                  </button>
+                </div>
+              );
+            })}
+          <label className="flex flex-col mt-4 font-bold">
+            Location :
+            <input
+              type="text"
+              className="border border-gray-400 p-2 w-full font-normal"
+              onChange={(event) => {
+                setLocation(event.target.value);
+              }}
+            />
+          </label>
+          <label className="flex flex-col mt-4 font-bold">
+            Description :
+            <textarea
+              className="border border-gray-400 p-2 w-full font-normal"
+              onChange={(event) => {
+                setDescription(event.target.value);
+              }}
+            />
+          </label>
+          <button
+            className="mt-4 border bg-blue-600 text-white w-fit p-2 rounded"
+            onClick={(event) => {
+              dispatch(addPostAsync(selectedImg, location, description, '', false));
+            }}
+          >
+            Publier
+          </button>
+          {redirect && <Navigate to={'/post/' + postData.id} replace={true} />}
+        </div>
       </div>
     </>
   );
