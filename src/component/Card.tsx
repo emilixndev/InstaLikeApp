@@ -3,6 +3,7 @@ import { Instalike } from '@jmetterrothan/instalike';
 import { Media } from '@jmetterrothan/instalike/src/instalike';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FaRegComment, FiSend, MdOutlineWhereToVote, TbDotsVertical } from 'react-icons/all';
 import { Navigate } from 'react-router-dom';
 
@@ -35,6 +36,7 @@ type CardProps = {
 };
 
 const Card = ({ post, canCommment, inFeed }: CardProps) => {
+  const { t, i18n } = useTranslation();
   const dispatch = useAppDispatch();
   const [navigateToPost, setnavigateToPost] = useState(false);
 
@@ -93,7 +95,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
               </div>
               <div>
                 <div className="text-sm font-semibold antialiased block leading-tight text-xs text-gray-600  ">
-                  {getDays()} days ago
+                  {getDays()} {t('card.day')}
                 </div>
               </div>
             </div>
@@ -108,7 +110,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                     }
                   }}
                 >
-                  Follow
+                  {t('actions.follow')}
                 </Button>
               </div>
             )}
@@ -128,7 +130,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                         dispatch(deletePostAsync(post.id));
                       }}
                     >
-                      Delete
+                      {t('action.delete')}
                     </MenuItem>
                   )}
 
@@ -143,7 +145,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                         }
                       }}
                     >
-                      Unfollow
+                      {t('action.unfollow')}
                     </MenuItem>
                   ) : (
                     !post.owner.isViewer && (
@@ -157,7 +159,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                           }
                         }}
                       >
-                        Follow
+                        {t('action.follow')}
                       </MenuItem>
                     )
                   )}
@@ -167,7 +169,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                         setnavigateToPost(true);
                       }}
                     >
-                      See publication
+                      {t('action.seePub')}
                     </MenuItem>
                   )}
                   <MenuItem
@@ -175,13 +177,12 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                       copyTextToClipboard(window.location.origin.toString() + '/post/' + post.id);
                     }}
                   >
-                    Copy link
+                    {t('action.copyL')}
                   </MenuItem>
                 </MenuList>
               </Menu>
             </div>
           </div>
-
           <button
             onDoubleClick={() => {
               if (inFeed) {
@@ -268,7 +269,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
             </div>
           </div>
           <div className="font-semibold text-sm mx-4 mt-2 mb-2">
-            {post.likesCount} likes | {post.commentsCount} comments
+            {post.likesCount} {t('card.likes')} | {post.commentsCount} {t('card.comments')}
           </div>
           <div className="h-[0.10rem] w-full bg-gray-300 "></div>
           {canCommment && displayCommentForm()}
@@ -287,7 +288,7 @@ const Card = ({ post, canCommment, inFeed }: CardProps) => {
                   dispatch(fetchCommentAsync(post.id, comments.data.nextCursor));
                 }}
               >
-                Load more comments
+                {t('card.loadComments')}
               </button>
             </div>
           )}

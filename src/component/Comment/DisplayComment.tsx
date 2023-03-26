@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { Instalike } from '@jmetterrothan/instalike';
+import { useTranslation } from 'react-i18next';
 import { BiTrash, TbDots, TbDotsCircleHorizontal, TbDotsVertical } from 'react-icons/all';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -11,6 +12,8 @@ type PreviewCommentProps = {
 
 const DisplayComment = ({ comment }: PreviewCommentProps) => {
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
+
   return (
     <>
       <div className=" rounded p-3 flex items-center">
@@ -36,7 +39,7 @@ const DisplayComment = ({ comment }: PreviewCommentProps) => {
                     dispatch(deleteOneCommentPostAsync(comment));
                   }}
                 >
-                  Delete
+                  {t('action.delete')}
                 </MenuItem>
               </MenuList>
             </Menu>

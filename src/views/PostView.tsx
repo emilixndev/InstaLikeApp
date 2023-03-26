@@ -34,24 +34,7 @@ const PostView = () => {
       {postStatut !== Status.LOADED ? (
         <ClipLoader color="#2C53F0" cssOverride={{ margin: 'auto', display: 'block' }} />
       ) : (
-        <>
-          {postData && (
-            <Card
-              post={postData}
-              postid={postData.id}
-              username={postData.owner.userName}
-              img={postData.resources[0]}
-              likes={postData.likesCount}
-              isLiked={postData.viewerHasLiked}
-              previewdComments={postData.previewComments}
-              date={postData.createdAt}
-              caption={postData.caption}
-              location={postData.location}
-              canCommment={true}
-              inFeed={false}
-            />
-          )}
-        </>
+        <>{postData && <Card post={postData} canCommment={true} inFeed={false} />}</>
       )}
     </>
   );

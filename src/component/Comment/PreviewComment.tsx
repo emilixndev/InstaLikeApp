@@ -9,7 +9,7 @@ type PreviewCommentProps = {
 const PreviewComment = ({ comment }: PreviewCommentProps) => {
   const refactorCommentText = (commentText: string) => {
     if (commentText.length >= 50) {
-      return commentText.slice(0, 50) + '...'; //TODO Modifier ça si c'est pas dans le feeed
+      return commentText.slice(0, 50) + '...';
     }
     return commentText;
   };

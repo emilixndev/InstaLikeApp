@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IoIosClose } from 'react-icons/all';
 import { Navigate, redirect } from 'react-router-dom';
 
@@ -24,12 +25,12 @@ const AddPostView = () => {
       setRedirect(true);
     }
   }, [postData.id]);
-
+  const { t, i18n } = useTranslation();
   return (
     <>
       <Menu />
       <div className="max-w-[640px] mx-auto border border-black  p-8 mt-20">
-        <p className="font-bold text-2xl text-center ">Ajouter un post</p>
+        <p className="font-bold text-2xl text-center ">{t('addPost.title')}</p>
         <div className="flex justify-center flex-col  mt-4 ">
           <input
             type="file"
@@ -37,11 +38,11 @@ const AddPostView = () => {
             className="mx-auto mt-4"
             onChange={(event) => {
               if (event.target.files) {
-                setSelectedImg(selectedImg.concat(event.target.files[0])); //TODO REPLACE l'IMG
+                setSelectedImg(selectedImg.concat(event.target.files[0]));
               }
             }}
           />
-          {selectedImg.length !== 0 && <div className="font-bold p-2">Images sélectionné : </div>}
+          {selectedImg.length !== 0 && <div className="font-bold p-2">{t('addPost.imgSelected')} </div>}
           {selectedImg &&
             selectedImg.map((img, index) => {
               return (
@@ -84,7 +85,7 @@ const AddPostView = () => {
               dispatch(addPostAsync(selectedImg, location, description, '', false));
             }}
           >
-            Publier
+            {t('addPost.publish')}
           </button>
           {redirect && <Navigate to={'/post/' + postData.id} replace={true} />}
         </div>

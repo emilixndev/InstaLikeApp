@@ -9,7 +9,19 @@ export const loginAsync = (email: string, password: string): AppThunkAction<Prom
       window.localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
       dispatch(login());
     } catch (e) {
-      dispatch(loginFail('Vous avez pas pu vous connecter'));
+      if (window.localStorage.getItem('i18nextLng') === 'en') {
+        dispatch(loginFail('There is a problem with the connexion'));
+        return;
+      }
+      if (window.localStorage.getItem('i18nextLng') === 'fr') {
+        dispatch(loginFail('Vous avez pas pu vous connecter'));
+        return;
+      }
+      if (!window.localStorage.getItem('i18nextLng')) {
+        dispatch(loginFail('There is a problem with the connexion'));
+
+        return;
+      }
     }
   };
 };

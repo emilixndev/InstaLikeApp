@@ -1,5 +1,30 @@
 {
-  "actions": {
-    "follow": "Follow"
+  "action": {
+    "follow": "Follow",
+    "delete": "Delete",
+    "unfollow": "Unfollow",
+    "seePub": "See publication",
+    "copyL": "Copy link"
+  },
+  "login": {
+    "email": "Email",
+    "pass" : "Password",
+    "connect" : "Connexion"
+  },
+  "addPost": {
+    "title": "Add a new post",
+    "imgSelected": "Images selected :",
+    "publish": "Publish"
+  },
+  "menu": {
+    "langage": "Change langage",
+    "logout": "Logout",
+    "publish": "Publish"
+  },
+  "card": {
+    "day": "Day(s) ago",
+    "comments": "Comment(s)",
+    "loadComments": "Load more comments",
+    "likes": "Like(s)"
   }
 }

@@ -24,7 +24,7 @@ const Discover = () => {
       {status !== Status.LOADED ? (
         <ClipLoader color="#2C53F0" cssOverride={{ margin: 'auto', display: 'block' }} />
       ) : (
-        <div className="grid grid-cols-3 gap-4pt-4 w-[70%] m-auto ">
+        <div className="grid grid-cols-1 gap-4pt-4 w-[70%] m-auto sm:grid-cols-2 md:grid-cols-3 ">
           {feed &&
             feed.map((post, key) => {
               return (

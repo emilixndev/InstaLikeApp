@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigate } from 'react-router-dom';
 
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -24,7 +25,7 @@ const LoginForm = () => {
       setRedirect(true);
     }
   }, [isAuthenticated]);
-
+  const { t, i18n } = useTranslation();
   return (
     <div className="flex items-center h-screen">
       {redirect && <Navigate to="feed" replace={true} />}
@@ -32,7 +33,7 @@ const LoginForm = () => {
         <h2 className="text-lg font-medium mb-4 font-['Billabong'] text-6xl">InstaLike</h2>
         <div className="mb-4">
           <label className="block font-medium mb-2">
-            Adresse email
+            {t('login.email')} :
             <input
               className="border border-gray-400 p-2 w-full"
               type="email"
@@ -44,7 +45,7 @@ const LoginForm = () => {
         </div>
         <div className="mb-6">
           <label className="block font-medium mb-2">
-            Mot de passe
+            {t('login.pass')} :
             <input
               className="border border-gray-400 p-2 w-full"
               type="password"
@@ -61,9 +62,8 @@ const LoginForm = () => {
           )}
         </div>
 
-        <button className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">Se connecter</button>
-        <button className="bg-red-600 text-white py-2 px-4 rounded-full hover:bg-red-800 ml-2" type="reset">
-          Effacer
+        <button className="bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600">
+          {t('login.connect')}
         </button>
       </form>
     </div>

@@ -1,4 +1,29 @@
 {
-  "actions": {
-    "follow": "Suivre"
-}}
+  "action": {
+    "follow": "Suivre",
+    "delete": "Supprimer",
+    "unfollow": "Ne plus suivre",
+    "seePub": "Voir la publication",
+    "copyL": "Copier le lien"
+  },
+  "login": {
+    "email": "Email",
+    "pass" : "Mot de passe",
+    "connect" : "Connexion"
+  },
+  "addPost": {
+    "title": "Ajouter un nouveau post",
+    "imgSelected": "Images sélectionnés:",
+    "publish": "Publier"
+  },
+  "menu": {
+    "langage": "Changer de langue",
+    "logout": "Déconnexion"
+  },
+  "card": {
+    "day": "Jour(s)",
+    "comments": "Commentaire(s)",
+    "loadComments": "Charger plus de commentaires",
+    "likes": "J'aime(s)"
+  }
+}
